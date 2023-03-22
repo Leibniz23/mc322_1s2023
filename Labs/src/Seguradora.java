@@ -4,6 +4,13 @@ public class Seguradora {
     private String email;
     private String endereco;
 
+    public Seguradora(String nome, String telefone, String email, String endereco) {
+        this.nome = nome;
+        this.telefone = telefone;
+        this.email = email;
+        this.endereco = endereco;
+    }
+
     public String getNome() {
         return this.nome;
     }
