@@ -53,18 +53,23 @@ public class Cliente {
         this.endereco = endereco;
     }
 
-    // public boolean validarCPF(String cpf) {
-    //     cpf = (this.cpf).replaceAll(, cpf);
-    //     return true;
-    // }
-
     public String toString() {
-        return "Nome= " + getNome() + "\n" +
-            "CPF= " + getCpf() + "\n" +
-            "Data de nascimento= " + getDataNascimento() + "\n" +
-            "Idade= " + getIdade() + "\n" +
-            "Endereco= " + getEndereco();
+        return "Nome: " + getNome() + "\n" +
+            "CPF: " + getCpf() + "\n" +
+            "Data de nascimento: " + getDataNascimento() + "\n" +
+            "Idade: " + getIdade() + "\n" +
+            "Endereco: " + getEndereco();
     }
+    
+    public String validarCPF(String cpf) {
+        cpf = this.cpf.replaceAll("[^0-9]", "");
+        int primeiro = cpf.digito1(cpf);
+        int segundo = cpf.digito2(cpf);
+        if (cpf[9] == primeiro && cpf[10] == segundo) {
+            
+        }
+    }
+
 }
 
 /*
