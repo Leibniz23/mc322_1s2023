@@ -53,10 +53,10 @@ public class Cliente {
         this.endereco = endereco;
     }
 
-    // public boolean validarCPF(String cpf) {
-    //     cpf = (this.cpf).replaceAll(, cpf);
-    //     return true;
-    // }
+    public boolean validarCPF(String cpf) {
+        cpf = (this.cpf).replaceAll(, cpf);
+        return true;
+    }
 
     public String toString() {
         return "Nome= " + getNome() + "\n" +
