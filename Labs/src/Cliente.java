@@ -85,12 +85,10 @@ public class Cliente {
         /* Segundo digito verificador */
         int segundo = 0;
         for (int i=0, j=11; i<n-1 && j>=(n-n_semdigito); i++, j--) { // i<n-1 porque agora contamos o primeiro digito verificador
-            System.out.println(v_cpf[i]+" "+j);
             segundo += (Character.digit(v_cpf[i],10))*j;
         }
         segundo = segundo % n;
         segundo = n - segundo;
-        System.out.println(segundo+" ");
         if (segundo>=10) {
             segundo = 0;
         }
@@ -107,7 +105,7 @@ public class Cliente {
             "CPF: " + getCpf() + "\n" +
             "Data de nascimento: " + getDataNascimento() + "\n" +
             "Idade: " + getIdade() + "\n" +
-            "Endereco: " + getEndereco();
+            "Endereco: " + getEndereco() + "\n";
     }
 
 }

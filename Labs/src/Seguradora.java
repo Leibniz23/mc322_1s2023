@@ -10,9 +10,19 @@ public class Seguradora {
         this.email = email;
         this.endereco = endereco;
     }
+    public Seguradora() {}
 
     public String getNome() {
         return this.nome;
+    }
+
+    @Override
+    public String toString() {
+        return 
+            "Nome: " + getNome() + "\n" +
+            "Telefone: " + getTelefone() + "\n" +
+            "Email:" + getEmail() + "\n" +
+            "Endereco:" + getEndereco() + "\n";
     }
 
     public void setNome(String nome) {

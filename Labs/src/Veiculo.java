@@ -9,6 +9,8 @@ public class Veiculo {
         this.modelo = modelo;
     }
 
+    public Veiculo() {}
+
     public String getPlaca() {
         return this.placa;
     }

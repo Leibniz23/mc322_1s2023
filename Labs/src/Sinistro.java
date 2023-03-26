@@ -10,6 +10,10 @@ public class Sinistro {
         this.endereco = endereco;
     }
 
+    public Sinistro(){
+        this.id = cont++;
+    }
+
     public int getId() {
         return this.id;
     }
