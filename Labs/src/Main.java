@@ -21,13 +21,13 @@ public class Main {
          * dentro do próprio método, porque nesse caso a informação de true ou false
          * seria inutilizada
          */
-        if (c_certo.validarCPF(c_certo.getCpf())) { // valida o CPF do primeiro cliente, que é válido
+        if (c_certo.validarCPF(c_certo.getCpf())) { // verifica o CPF do primeiro cliente, que é válido
             System.out.println(c_certo.getCpf()+" é um CPF válido\n");
         } else {
             System.out.println(c_certo.getCpf()+" não é um CPF válido\n");
         }
 
-        if (c_errado.validarCPF(c_errado.getCpf())) { // valida o CPF do segundo cliente, que é inválido
+        if (c_errado.validarCPF(c_errado.getCpf())) { // verifica o CPF do segundo cliente, que é inválido
             System.out.println(c_errado.getCpf()+" é um CPF válido\n");
         } else {
             System.out.println(c_errado.getCpf()+" não é um CPF válido\n");
@@ -41,7 +41,7 @@ public class Main {
 
         System.out.println(c_certo.toString()); // testa se os sets acima funcionaram
 
-        if (c_certo.validarCPF(c_certo.getCpf())) { // valida o novamente o CPF do primeiro cliente, que agora é válido
+        if (c_certo.validarCPF(c_certo.getCpf())) { // verifica novamente o CPF do primeiro cliente, que agora é inválido
             System.out.println(c_certo.getCpf()+" é um CPF válido\n");
         } else {
             System.out.println(c_certo.getCpf()+" não é um CPF válido\n");
