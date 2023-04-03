@@ -1,2 +1,2 @@
 # mc322_1s2023
-#mudandça teste
+Repositório da matéria MC322 - Programação Orientada a Objetos
