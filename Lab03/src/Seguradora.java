@@ -3,6 +3,8 @@ public class Seguradora {
     private String telefone;
     private String email;
     private String endereco;
+    private list listaSinistros;
+    private list listaClientes
 
     public Seguradora(String nome, String telefone, String email, String endereco) {
         this.nome = nome;
