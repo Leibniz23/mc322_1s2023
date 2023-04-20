@@ -1,47 +1,83 @@
 import java.time.LocalDate;
+import java.text.*;
 import java.util.*;
 
 public class ClientePF extends Cliente {
-    private String CPF;
-    private LocalDate dataLicenca;
+    final String CPF;
+    private Date dataLicenca;
     private String educacao;
     private String genero;
     private String classeEconomica;
 
-    public ClientePF(String nome , String endereco , Date dataLicenca,
-                        String educacao , String genero , String classeEconomica ,
-                        List < Veiculo > listaVeiculos , String cpf , Date dataNascimento ) {
-    super(nome, endereco, dataLicenca, educacao, genero, classeEconomica, listaVeiculos);
-    this.cpf = cpf ;
-    this.dataNascimento = dataNascimento ;
-    }
+    public ClientePF(String nome, String endereco, LocalDate dataLicenca,
+                        String educacao, String genero, String classeEconomica,
+                        String cpf, Date dataNascimento, Veiculo ... listaVeiculos) {
+    super(nome, endereco);
+    this.CPF = cpf.replaceAll("[^0-9]", ""); // só os números do CPF
+    this.dataLicenca = new Date(); // LocalDate.get para pegar dia mes e ano
+    this.educacao = educacao;
+    Date dataHoraAtual = new Date();
+    String data = new SimpleDateFormat("dd/MM/yyyy").format(dataHoraAtual);
 
-    public String getCpf() {
-        return this.cpf;
+    this.genero = genero;
+    this.classeEconomica = classeEconomica;
+    for (Veiculo veiculo : listaVeiculos) {
+        this.listaVeiculos.add(veiculo); // colocar no cliente padrao
     }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public Date getDataNascimento() {
-        return this.dataNascimento;
-    }
-
-    public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
     }
 
     @Override
-    public String toString () {
-    // ...
+    public String getCadastro() {
+        return this.CPF;
     }
-    public boolean validarCPF ( String cpf ){
-    // ...
+
+    public LocalDate getdataLicenca() {
+        return this.dataLicenca;
+    }
+
+    public void setdataLicenca(LocalDate dataLicenca) {
+        this.dataLicenca = dataLicenca;
+    }
+
+    public LocalDate getDataLicenca() {
+        return this.dataLicenca;
+    }
+
+    public String getEducacao() {
+        return this.educacao;
+    }
+
+    public void setEducacao(String educacao) {
+        this.educacao = educacao;
+    }
+
+    public String getGenero() {
+        return this.genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    public String getClasseEconomica() {
+        return this.classeEconomica;
+    }
+
+    public void setClasseEconomica(String classeEconomica) {
+        this.classeEconomica = classeEconomica;
+    }
+
+    @Override
+    public String toString() {
+        return
+            " CPF:" + getCadastro() + "\n" +
+            "DataLicenca:" + getDataLicenca() + "\n" +
+            "Educacao:" + getEducacao() + "\n" +
+            "Genero:" + getGenero() + "\n" +
+            "Classe Economica:" + getClasseEconomica() + "\n";
     }
     
     public boolean validarCPF(String cpf) {
-        cpf = this.CPF.replaceAll("[^0-9]", "");
         char[] v_cpf = cpf.toCharArray();
         int n = cpf.length();
         int n_semdigito = n-2;
@@ -84,6 +120,6 @@ public class ClientePF extends Cliente {
         }
 
         return true; // Se não falhou até aqui, então é válido
-
     }
 }
+

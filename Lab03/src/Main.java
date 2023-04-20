@@ -1,86 +1,91 @@
+import java.time.LocalDate;
+import java.text.*;
+import java.util.*;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        Cliente c_certo = new Cliente("Matheus", "432.130.688-45",
-        "01/08/2003", 19, "Rua Saturnino de Brito");
-
-        Cliente c_errado = new Cliente("Matheus", "234.031.886-45",
-        "01/08/2003", 19, "Rua Saturnino de Brito");
-
-        Seguradora seg = new Seguradora();
+        String entrada;
+        Seguradora seguradora = new Seguradora("teste", "teste", "teste", "teste");
+        Veiculo v1 = new Veiculo("teste", "teste", "teste");
+        Veiculo v2 = new Veiculo("teste", "teste", "teste");
+        Veiculo v3 = new Veiculo("teste", "teste", "teste");
+        Veiculo v4 = new Veiculo("teste", "teste", "teste");
+        ClientePF clientepf_1 = new ClientePF("teste1", null, null, null, null, null, "97885998002", null, v1);
+        ClientePJ clientepj_1 = new ClientePJ("teste1", null, "90.387.818/0001-00", null, v2);
+        ClientePF clientepf_2 = new ClientePF("teste2", null, null, null, null, null, "97885998002", null, v3);
+        ClientePJ clientepj_2 = new ClientePJ("teste2", null, "28.745.587/0001-87", null, v4);
         
-        Veiculo v = new Veiculo();
-
-        Sinistro sin1 = new Sinistro();
-
-        Sinistro sin2 = new Sinistro();
-
-        System.out.println(c_certo.toString()); // testa todos os gets de Cliente
-
-        /**
-         * Eu coloquei o if e o println do validarCpf() na main, e não
-         * dentro do próprio método, porque nesse caso a informação de true ou false
-         * seria inutilizada
-         */
-        if (c_certo.validarCPF(c_certo.getCpf())) { // valida o CPF do primeiro cliente, que é válido
-            System.out.println(c_certo.getCpf()+" é um CPF válido\n");
-        } else {
-            System.out.println(c_certo.getCpf()+" não é um CPF válido\n");
+        if (clientepf_1.validarCPF(clientepf_1.getCadastro())) {
+            seguradora.cadastrarCliente(clientepf_1);
+        }
+        if (clientepf_2.validarCPF(clientepf_2.getCadastro())) {
+            seguradora.cadastrarCliente(clientepf_1);
+        }
+        if (clientepj_1.validarCNPJ(clientepj_1.getCadastro())) {
+            seguradora.cadastrarCliente(clientepj_1);
+        }
+        if (clientepj_2.validarCNPJ(clientepj_2.getCadastro())) {
+            seguradora.cadastrarCliente(clientepj_2);
         }
 
-        if (c_errado.validarCPF(c_errado.getCpf())) { // valida o CPF do segundo cliente, que é inválido
-            System.out.println(c_errado.getCpf()+" é um CPF válido\n");
-        } else {
-            System.out.println(c_errado.getCpf()+" não é um CPF válido\n");
+        seguradora.gerarSinistro(null, null, null, clientepf_1);
+        seguradora.gerarSinistro(null, null, null, clientepf_2);
+        seguradora.gerarSinistro(null, null, null, clientepj_1);
+        seguradora.gerarSinistro(null, null, null, clientepj_2);
+
+        System.out.println("Acessando Seguradora Fachada...");
+        System.out.println("Atualizando e validando clientes vinculados...");
+        System.out.println("Imprimindo situação atual da Seguradora"); // to String
+
+        System.out.println("------------------------------------------------");
+        System.out.println(seguradora.toString());
+        System.out.println("------------------------------------------------");
+
+        System.out.println("Quais informações você deseja ver?");
+        System.out.println("Digite PF para listar os clientes Pessoa Física"); // usar toString de clientes e/ou veiculos
+        System.out.println("Digite PJ para listar os clientes Pessoa Jurídica"); // usar toString de clientes e/ou veiculos
+        
+        entrada = lerEntrada();
+        System.out.println("------------------------------------------------");
+        List<Cliente> clientes = seguradora.listarClientes(entrada);
+        for (Cliente cList : clientes) {
+            System.out.println(cList.toString()+"\n");
+        }
+        System.out.println("------------------------------------------------");
+
+        System.out.println("Digite o CPF ou CNPJ do cliente para buscar os sinistros associados");
+        entrada = lerEntrada();
+
+        System.out.println("------------------------------------------------");
+        seguradora.visualizarSinistro(entrada);
+        System.out.println("------------------------------------------------");
+
+        System.out.println("Escolha um cliente para remover e digite o CPF/CNPJ dele");
+        for (Cliente cList : seguradora.getListaClientes()) {
+            System.out.println(cList.getNome()+" :"+cList.getCadastro()+"\n"); // coloquei só o nome e o cadastro, e não toString, pra evitar poluição na tela
         }
 
-        c_certo.setNome("Leonardo");
-        c_certo.setCpf("444.444.444-00");
-        c_certo.setDataNascimento("31/08/2003");
-        c_certo.setEndereco("Rua dos Alfeneiros");
-        c_certo.setIdade(20);
+        System.out.println();
+        entrada = lerEntrada();
+        System.out.println();
 
-        System.out.println(c_certo.toString()); // testa se os sets acima funcionaram
-
-        if (c_certo.validarCPF(c_certo.getCpf())) { // valida o novamente o CPF do primeiro cliente, que agora é válido
-            System.out.println(c_certo.getCpf()+" é um CPF válido\n");
-        } else {
-            System.out.println(c_certo.getCpf()+" não é um CPF válido\n");
+        System.out.println("Removido com sucesso!");
+        System.out.println("Digite SINISTRO para listar os sinistros cadastrados");
+        if (lerEntrada().equals("SINISTRO")) {
+            for (Sinistro sList : seguradora.listarSinistros()) {
+                System.out.println(sList.toString());
+            }
         }
 
-        /**
-         * Utilizei o set para inicializar os objetos seg, v, sin1 e sin2 
-         * para testar os métodos set, mesmo tendo criado um construtor que poderia inicializa-los
-         */
-        seg.setNome("Seguradora Fachada");
-        seg.setTelefone("(19) 95427-2356");
-        seg.setEmail("aNgElOfThEnIgHt@gmail.com");
-        seg.setEndereco("Avenida Tenebris");
-        System.out.println("Nome: " + seg.getNome() + "\n" +
-                            "Telefone: " + seg.getTelefone() + "\n" +
-                            "Email: " + seg.getEmail() + "\n" +
-                            "Endereco: " + seg.getEndereco() + "\n");
+        System.out.println("Finalizando...");
+        System.out.println("------------------------------------------------");     
+    }
 
-        v.setPlaca("BRA2E19");
-        v.setMarca("Honda");
-        v.setModelo("Civic");
-        System.out.println("Placa: " + v.getPlaca() + "\n" +
-                            "Marca: " + v.getMarca() + "\n" +
-                            "Modelo: " + v.getModelo() + "\n");
-
-        /**
-         * Como o ID é dado por um contador estático e comum a todos
-         * os objetos da classe, ele será sempre diferente
-         */
-        sin1.setData("11/02/2009");
-        sin1.setEndereco("Rua Santa Menefreda");
-        System.out.println("ID: " + sin1.getId() + "\n" +
-                            "Data: " + sin1.getData() + "\n" +
-                            "Endereço: " + sin1.getEndereco() + "\n");
-
-        sin2.setData("25/07/2020");
-        sin2.setEndereco("Rua Café's Pizzaria");
-        System.out.println("ID: " + sin2.getId() + "\n" +
-                            "Data: " + sin2.getData() + "\n" +
-                            "Endereço: " + sin2.getEndereco());
+    public static String lerEntrada() {
+        Scanner scan = new Scanner(System.in);
+        String entrada = scan.next();
+        scan.close();
+        return entrada;
     }
 }

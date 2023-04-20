@@ -1,13 +1,14 @@
 import java.util.*;
 
 public class Cliente {
-    private String nome;
-    private String endereco;
-    private List <Veiculo> listaVeiculos;
+    protected String nome;
+    protected String endereco;
+    protected List <Veiculo> listaVeiculos;
 
-    public Cliente(String nome, String endereco, List <Veiculo> listaVeiculos) {
+    public Cliente(String nome, String endereco, Veiculo ... listaVeiculos) {
         this.nome = nome;
         this.endereco = endereco;
+        this.listaVeiculos = new ArrayList<Veiculo>();
     }
 
     public String getNome() {
@@ -26,12 +27,18 @@ public class Cliente {
         this.endereco = endereco;
     }
 
+    public List<Veiculo> getListVeiculos() {
+        return listaVeiculos;
+    }
+
+    public String getCadastro() { // apenas para o @Override de ClientePF e ClientePJ funcionar
+        return null;
+    }
+
     public String toString() {
         return "Nome: " + getNome() + "\n" +
-            "CPF: " + getCpf() + "\n" +
-            "Data de nascimento: " + getDataNascimento() + "\n" +
-            "Idade: " + getIdade() + "\n" +
-            "Endereco: " + getEndereco() + "\n";
+                "Endereco: " + getEndereco() + "\n";
+
     }
 
 }

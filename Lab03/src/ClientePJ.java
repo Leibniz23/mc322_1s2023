@@ -1,36 +1,42 @@
-import java.util.*;
+import java.util.Date;
 
 public class ClientePJ extends Cliente {
     final String CNPJ ;
-    private Date dataNascimento ;
+    private Date dataFundacao;
 
-    public ClientePJ(String cpf, Date dataNascimento) {
-        this.cpf = cpf;
-        this.dataNascimento = dataNascimento;
-    }
-
-
-    public String getCpf() {
-        return this.cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public Date getDataNascimento() {
-        return this.dataNascimento;
-    }
-
-    public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
+    public ClientePJ(String nome, String endereco, String cnpj, Date dataFundacao, Veiculo ... lista_Veiculos) {
+        super(nome,endereco);
+        this.CNPJ = cnpj.replaceAll("[^0-9]", "");
+        this.dataFundacao = dataFundacao;
+        for (Veiculo veiculo : listaVeiculos) {
+            this.listaVeiculos.add(veiculo); // colocar no cliente padrao
+        }
     }
 
     @Override
-    public String toString () {
-    // ...
+    public String getCadastro() {
+        return this.CNPJ;
     }
-    public boolean validarCPF ( String cpf ){
+
+    public Date getDataFundacao() {
+        return this.dataFundacao;
+    }
+
+    public void setDataFundacao(Date dataFundacao) {
+        this.dataFundacao = dataFundacao;
+    }
+
+
+    @Override
+    public String toString() {
+        return "{" +
+            " CNPJ='" + getCadastro() + "'" +
+            ", dataFundacao='" + getDataFundacao() + "'" +
+            "}";
+    }
+    
+    public boolean validarCNPJ(String cnpj){
+        return true;
     // ...
     }
 }
