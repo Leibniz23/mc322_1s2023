@@ -1,27 +1,25 @@
 import java.time.LocalDate;
-import java.text.*;
-import java.util.*;
+import java.time.format.DateTimeFormatter;
 
 public class ClientePF extends Cliente {
     final String CPF;
-    private Date dataLicenca;
+    private LocalDate dataLicenca;
     private String educacao;
-    private Date dataNascimento;
+    private LocalDate dataNascimento;
     private String genero;
     private String classeEconomica;
 
-    public ClientePF(String nome, String endereco, LocalDate dataLicenca,
-                        String educacao, String genero, String classeEconomica,
-                        String cpf, LocalDate dataNascimento, Veiculo ... listaVeiculos) {
+    public ClientePF(String nome, String endereco, String cpf, String educacao, LocalDate dataNascimento,
+                    String genero, String classeEconomica, Veiculo ... listaVeiculos) {
     super(nome, endereco);
     this.CPF = cpf.replaceAll("[^0-9]", ""); // só os números do CPF
-    this.dataLicenca = new Date(); // LocalDate.get para pegar dia mes e ano
+    this.dataLicenca = LocalDate.now(); // LocalDate.get para pegar dia mes e ano
     this.educacao = educacao;
     this.dataNascimento = dataNascimento;
     this.genero = genero;
     this.classeEconomica = classeEconomica;
     for (Veiculo veiculo : listaVeiculos) {
-        this.listaVeiculos.add(veiculo); // colocar no cliente padrao
+        this.listaVeiculos.add(veiculo);
     }
     }
 
@@ -30,12 +28,12 @@ public class ClientePF extends Cliente {
         return this.CPF;
     }
 
-    public void setdataLicenca(Date dataLicenca) {
+    public void setdataLicenca(LocalDate dataLicenca) {
         this.dataLicenca = dataLicenca;
     }
 
     public String getDataLicenca() {
-        String data = new SimpleDateFormat("dd/MM/yyyy").format(this.dataLicenca);
+        String data = this.dataLicenca.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         return data;
     }
 
@@ -64,7 +62,7 @@ public class ClientePF extends Cliente {
     }
 
     public String getDataNascimento() { // não tem set porque ninguém muda de data de nascimento
-        String data = new SimpleDateFormat("dd/MM/yyyy").format(this.dataNascimento);
+        String data = this.dataNascimento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         return data;
     }
 
@@ -79,7 +77,7 @@ public class ClientePF extends Cliente {
             "Classe Economica: " + getClasseEconomica() + "\n";
     }
     
-    public boolean validarCPF(String cpf) {
+    public static boolean validarCPF(String cpf) {
         char[] v_cpf = cpf.toCharArray();
         int n = cpf.length();
         int n_semdigito = n-2;

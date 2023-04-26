@@ -14,23 +14,25 @@ public class Main {
         Veiculo v2 = new Veiculo("MRB-5329", "Honda", "Semi novo");
         Veiculo v3 = new Veiculo("HQV-7549", "Toyota", "Velho");
         Veiculo v4 = new Veiculo("BVL-9056", "Ford", "Novo");
-        ClientePF clientepf_1 = new ClientePF("Flavin do Pneu", "Rua dos Carijós", LocalDate.now(), "Ensino Superior",
-                        "Feminino", "Classe Média", "43213068845", teste, v1);
-        ClientePJ clientepj_1 = new ClientePJ("Gasparzinho Lanches", "Avenida Almirante Maximiano Fonseca", "46.068.425/0001-33", new Date(), v2);
-        ClientePF clientepf_2 = new ClientePF("Shaolin Matador de Porco", "Rua da Imprensa", null, "Ensino Médio",
-                        "Masculino", "Classe Alta", "78543216630", null, v3);
-        ClientePJ clientepj_2 = new ClientePJ("Planet Hemp", "Rua Serra de Bragança", "28.745.587/0001-87", new Date(), v4);
+        ClientePF clientepf_1 = new ClientePF("Flavin do Pneu", "Rua dos Carijós", "43213068845",
+                    "Ensino Superior", LocalDate.of(2000, 05, 25), "Feminino", "Classe Média", v1);
+        ClientePJ clientepj_1 = new ClientePJ("Gasparzinho Lanches", "Avenida Almirante Maximiano Fonseca",
+                            "46.068.425/0001-33", LocalDate.of(2018, 07, 22), v2);
+        ClientePF clientepf_2 = new ClientePF("Shaolin Matador de Porco", "Rua da Imprensa", "78543216630",
+                    "Ensino Médio", LocalDate.of(2003, 07, 02), "Masculino", "Classe Alta", v3);
+        ClientePJ clientepj_2 = new ClientePJ("Planet Hemp", "Rua Serra de Bragança",
+                            "28.745.587/0001-87", LocalDate.of(2017, 06, 21), v4);
         
-        if (clientepf_1.validarCPF(clientepf_1.getCadastro())) {
+        if (ClientePF.validarCPF(clientepf_1.getCadastro())) {
             seguradora.cadastrarCliente(clientepf_1);
         }
-        if (clientepf_2.validarCPF(clientepf_2.getCadastro())) {
+        if (ClientePF.validarCPF(clientepf_2.getCadastro())) {
             seguradora.cadastrarCliente(clientepf_2);
         }
-        if (clientepj_1.validarCNPJ(clientepj_1.getCadastro())) {
+        if (ClientePJ.validarCNPJ(clientepj_1.getCadastro())) {
             seguradora.cadastrarCliente(clientepj_1);
         }
-        if (clientepj_2.validarCNPJ(clientepj_2.getCadastro())) {
+        if (ClientePJ.validarCNPJ(clientepj_2.getCadastro())) {
             seguradora.cadastrarCliente(clientepj_2);
         } 
 
@@ -48,8 +50,8 @@ public class Main {
         System.out.println("------------------------------------------------");
 
         System.out.println("Quais informações você deseja ver?");
-        System.out.println("Digite PF para listar os clientes Pessoa Física"); // usar toString de clientes e/ou veiculos
-        System.out.println("Digite PJ para listar os clientes Pessoa Jurídica"); // usar toString de clientes e/ou veiculos
+        System.out.println("Digite PF para listar os clientes Pessoa Física");
+        System.out.println("Digite PJ para listar os clientes Pessoa Jurídica");
         
         entrada = lerEntrada(scan);
         System.out.println("------------------------------------------------");
@@ -63,7 +65,11 @@ public class Main {
         entrada = lerEntrada(scan);
 
         System.out.println("------------------------------------------------");
-        seguradora.visualizarSinistro(entrada);
+        if (ClientePF.validarCPF(entrada) || ClientePJ.validarCNPJ(entrada)) {
+            seguradora.visualizarSinistro(entrada);
+        } else {
+            System.out.println("Cadastro inválido");
+        }
         System.out.println("------------------------------------------------");
 
         System.out.println("Escolha um cliente para remover e digite o CPF/CNPJ dele");
@@ -71,13 +77,18 @@ public class Main {
         for (Cliente cList : seguradora.getListaClientes()) {
             System.out.println(cList.getNome()+": "+cList.getCadastro()); // coloquei só o nome e o cadastro (e não toString) pra evitar poluição na tela
         }
-
         System.out.println();
+        
         entrada = lerEntrada(scan);
         System.out.println();
+        boolean existe = seguradora.removerCliente(entrada);
+        if (!existe) {
+            System.out.println("Esse cliente não está cadastrado");
+        } else {
+            System.out.println("Removido com sucesso!");
+        }
 
-        System.out.println("Removido com sucesso!");
-        System.out.println("Digite SINISTRO para listar os sinistros cadastrados");
+        System.out.println("Digite SINISTROS para listar os sinistros cadastrados");
         System.out.println("------------------------------------------------");
         if (lerEntrada(scan).equals("SINISTROS")) {
             for (Sinistro sList : seguradora.listarSinistros()) {

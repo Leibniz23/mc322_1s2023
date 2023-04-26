@@ -68,19 +68,22 @@ public class Seguradora {
     }
 
     public boolean removerCliente(String cliente) { // assumindo que String cliente é o CPF/CNPJ
-        boolean result = false; // se nunca entrar no if o cliente não está na lista
-        for (Cliente cList : this.listaClientes) {
-            if (cList.getCadastro().equals(cliente)) { 
-                result = this.listaClientes.remove(cList);
+        Iterator<Cliente> itClientes = this.listaClientes.iterator();
+        while (itClientes.hasNext()) { // percorre a lista usando Iterator
+            Cliente cList = itClientes.next();
+            if (cList.getCadastro().equals(cliente)) {
+                itClientes.remove();
             }
-        } // removeu o cliente da lista de clientes
+        }
 
-        for (Sinistro sList : this.listaSinistros) {
+        Iterator<Sinistro> itSinistros = this.listaSinistros.iterator();
+        while (itSinistros.hasNext()) { // percorre a lista usando Iterator
+            Sinistro sList = itSinistros.next();
             if (sList.getCliente().getCadastro().equals(cliente)) {
-                result = this.listaSinistros.remove(sList);
+                itSinistros.remove();
             }
-        } // removeu todos os sinistros associados a esse cliente
-        return result;
+        }
+        return true;
     }
 
     public List<Cliente> listarClientes(String tipoCliente) {

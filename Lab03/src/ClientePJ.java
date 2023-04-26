@@ -1,11 +1,11 @@
-import java.text.*;
-import java.util.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class ClientePJ extends Cliente {
     final String CNPJ ;
-    private Date dataFundacao;
+    private LocalDate dataFundacao;
 
-    public ClientePJ(String nome, String endereco, String cnpj, Date dataFundacao, Veiculo ... lista_Veiculos) {
+    public ClientePJ(String nome, String endereco, String cnpj, LocalDate dataFundacao, Veiculo ... lista_Veiculos) {
         super(nome,endereco);
         this.CNPJ = cnpj.replaceAll("[^0-9]", "");
         this.dataFundacao = dataFundacao;
@@ -20,11 +20,11 @@ public class ClientePJ extends Cliente {
     }
 
     public String getDataFundacao() {
-        String data = new SimpleDateFormat("dd/MM/yyyy").format(this.dataFundacao);
+        String data = this.dataFundacao.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         return data;
     }
 
-    public void setDataFundacao(Date dataFundacao) {
+    public void setDataFundacao(LocalDate dataFundacao) {
         this.dataFundacao = dataFundacao;
     }
 
@@ -35,7 +35,7 @@ public class ClientePJ extends Cliente {
             "DataFundacao: " + getDataFundacao() + "\n";
     }
     
-    public boolean validarCNPJ(String cnpj) {
+    public static boolean validarCNPJ(String cnpj) {
         if (cnpj.length() != 14) {
             return false;
         }
