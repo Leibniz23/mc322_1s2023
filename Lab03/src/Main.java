@@ -7,7 +7,6 @@ public class Main {
     public static void main(String[] args) {
         String entrada;
         Scanner scan = new Scanner(System.in);
-        LocalDate teste = new LocalDate();
 
         Seguradora seguradora = new Seguradora("Seguradora Fachada", "(19) 99999-9999",
                         "fachada@gmail.com", "Rua dos Alfeneiros");
