@@ -69,9 +69,9 @@ public class Sinistro {
         return "ID: " + getID() + "\n" +
             "Data: " + getData() + "\n" +
             "Endereco: " + getEndereco() + "\n" +
-            "Seguradora: " + getSeguradora() + "\n" +
-            "Veiculo: " + getVeiculo() + "\n" +
-            "Cliente: " + getCliente() + "\n";
+            "Seguradora: " + getSeguradora().getNome() + "\n" + // só o nome para facilitar a visualização
+            "Veiculo:\n" + getVeiculo().toString() + "\n" +
+            "Cliente: " + getCliente().getCadastro() + "\n";
     }
 
 }

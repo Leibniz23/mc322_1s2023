@@ -110,13 +110,13 @@ public class Seguradora {
     }
 
     public boolean visualizarSinistro(String cliente) {
-        for (Cliente cList : this.listaClientes) {
-            if (cList.getCadastro().equals(cliente)) { 
-                System.out.println(cList.toString());
-                return true;
+        boolean result = false;
+        for (Sinistro sList : this.listaSinistros) {
+            if (sList.getCliente().getCadastro().equals(cliente)) {
+                System.out.println(sList.toString());
             }
         }
-        return false;
+        return result;
     }
 
 

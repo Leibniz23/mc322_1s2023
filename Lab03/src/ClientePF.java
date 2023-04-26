@@ -6,19 +6,18 @@ public class ClientePF extends Cliente {
     final String CPF;
     private Date dataLicenca;
     private String educacao;
+    private Date dataNascimento;
     private String genero;
     private String classeEconomica;
 
     public ClientePF(String nome, String endereco, LocalDate dataLicenca,
                         String educacao, String genero, String classeEconomica,
-                        String cpf, Date dataNascimento, Veiculo ... listaVeiculos) {
+                        String cpf, LocalDate dataNascimento, Veiculo ... listaVeiculos) {
     super(nome, endereco);
     this.CPF = cpf.replaceAll("[^0-9]", ""); // só os números do CPF
     this.dataLicenca = new Date(); // LocalDate.get para pegar dia mes e ano
     this.educacao = educacao;
-    Date dataHoraAtual = new Date();
-    String data = new SimpleDateFormat("dd/MM/yyyy").format(dataHoraAtual);
-
+    this.dataNascimento = dataNascimento;
     this.genero = genero;
     this.classeEconomica = classeEconomica;
     for (Veiculo veiculo : listaVeiculos) {
@@ -31,16 +30,13 @@ public class ClientePF extends Cliente {
         return this.CPF;
     }
 
-    public LocalDate getdataLicenca() {
-        return this.dataLicenca;
-    }
-
-    public void setdataLicenca(LocalDate dataLicenca) {
+    public void setdataLicenca(Date dataLicenca) {
         this.dataLicenca = dataLicenca;
     }
 
-    public LocalDate getDataLicenca() {
-        return this.dataLicenca;
+    public String getDataLicenca() {
+        String data = new SimpleDateFormat("dd/MM/yyyy").format(this.dataLicenca);
+        return data;
     }
 
     public String getEducacao() {
@@ -67,14 +63,20 @@ public class ClientePF extends Cliente {
         this.classeEconomica = classeEconomica;
     }
 
+    public String getDataNascimento() { // não tem set porque ninguém muda de data de nascimento
+        String data = new SimpleDateFormat("dd/MM/yyyy").format(this.dataNascimento);
+        return data;
+    }
+
     @Override
     public String toString() {
         return
-            " CPF:" + getCadastro() + "\n" +
-            "DataLicenca:" + getDataLicenca() + "\n" +
-            "Educacao:" + getEducacao() + "\n" +
-            "Genero:" + getGenero() + "\n" +
-            "Classe Economica:" + getClasseEconomica() + "\n";
+            "CPF: " + getCadastro() + "\n" +
+            "DataLicenca: " + getDataLicenca() + "\n" +
+            "DataNascimento: " + getDataNascimento() + "\n" +
+            "Educacao: " + getEducacao() + "\n" +
+            "Genero: " + getGenero() + "\n" +
+            "Classe Economica: " + getClasseEconomica() + "\n";
     }
     
     public boolean validarCPF(String cpf) {
