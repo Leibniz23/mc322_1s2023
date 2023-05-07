@@ -75,5 +75,4 @@ public class Sinistro {
             "Veiculo:\n" + getVeiculo().toString() + "\n" +
             "Cliente: " + getCliente().getCadastro() + "\n";
     }
-
 }

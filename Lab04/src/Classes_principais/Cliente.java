@@ -36,6 +36,10 @@ public class Cliente {
         return null;
     }
 
+    public double calculaScore() {
+        return 0.0;
+    }
+
     public String toString() {
         return "Nome: " + getNome() + "\n" +
                 "Endereco: " + getEndereco() + "\n";

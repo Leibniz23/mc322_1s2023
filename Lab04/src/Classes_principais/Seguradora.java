@@ -58,7 +58,7 @@ public class Seguradora {
         return this.listaSinistros;
     }
     
-    public boolean cadastrarCliente(Cliente newClient) {
+    public boolean cadastrarCliente(Cliente newClient) { // Supõe que o cliente passado é válido
         for (Cliente client : this.listaClientes) {
             if(newClient.getCadastro().equals(client.getCadastro())) {
                 return false;
@@ -68,7 +68,7 @@ public class Seguradora {
         return result;
     }
 
-    public boolean removerCliente(String cliente) { // assumindo que String cliente é o CPF/CNPJ
+    public boolean removerCliente(String cliente) { // Supõe que o cliente passado é válido
         boolean result = false; // se nunca entrar no if o cliente não está na lista
         for (Cliente cList : this.listaClientes) {
             if (cList.getCadastro().equals(cliente)) { 
