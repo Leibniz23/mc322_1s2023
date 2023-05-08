@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 public class ClientePJ extends Cliente {
     final String CNPJ ;
     private LocalDate dataFundacao;
+    private int qtdeFuncionarios;
 
     public ClientePJ(String nome, String endereco, String cnpj, LocalDate dataFundacao, Veiculo ... lista_Veiculos) {
         super(nome,endereco);
@@ -27,6 +28,20 @@ public class ClientePJ extends Cliente {
 
     public void setDataFundacao(LocalDate dataFundacao) {
         this.dataFundacao = dataFundacao;
+    }
+
+    public int getQtdeFuncionarios() {
+        return this.qtdeFuncionarios;
+    }
+
+    public void setQtdeFuncionarios(int qtdeFuncionarios) {
+        this.qtdeFuncionarios = qtdeFuncionarios;
+    }
+
+    @Override
+    public double calculaScore() {
+        double score = CalcSeguro.VALOR_BASE.getFator() * (1+ (getQtdeFuncionarios()/100) * getListaVeiculos().size());
+        return score;
     }
 
     @Override

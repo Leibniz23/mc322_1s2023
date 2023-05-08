@@ -1,3 +1,4 @@
+package Menus;
 import java.util.Scanner;
 
 public class FuncoesMenu {

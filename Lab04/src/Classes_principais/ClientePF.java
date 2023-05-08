@@ -75,20 +75,21 @@ public class ClientePF extends Cliente {
 
     @Override
     public double calculaScore() {
-        int idade = calcIdade();
+        int carros, idade = calcIdade();
+        double score;
         if (18<=idade || idade < 30) {
-            int carros = this.getListVeiculos().size();
-            double score = CalcSeguro.VALOR_BASE.getFator() * CalcSeguro.FATOR_18_30.getFator() * carros;
+            carros = this.getListaVeiculos().size();
+            score = CalcSeguro.VALOR_BASE.getFator() * CalcSeguro.FATOR_18_30.getFator() * carros;
             return score;
 
         } else if (30<=idade || idade<60) {
-            int carros = this.getListVeiculos().size();
-            double score = CalcSeguro.VALOR_BASE.getFator() * CalcSeguro.FATOR_30_60.getFator() * carros;
+            carros = this.getListaVeiculos().size();
+            score = CalcSeguro.VALOR_BASE.getFator() * CalcSeguro.FATOR_30_60.getFator() * carros;
             return score;
 
         } else if (60<=idade || idade<90) {
-            int carros = this.getListVeiculos().size();
-            double score = CalcSeguro.VALOR_BASE.getFator() * CalcSeguro.FATOR_60_90.getFator() * carros;
+            carros = this.getListaVeiculos().size();
+            score = CalcSeguro.VALOR_BASE.getFator() * CalcSeguro.FATOR_60_90.getFator() * carros;
             return score;
 
         } else {

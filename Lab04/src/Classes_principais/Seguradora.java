@@ -64,24 +64,48 @@ public class Seguradora {
                 return false;
             }
         }
+
         boolean result = this.listaClientes.add(newClient);
         return result;
     }
 
     public boolean removerCliente(String cliente) { // Supõe que o cliente passado é válido
-        boolean result = false; // se nunca entrar no if o cliente não está na lista
-        for (Cliente cList : this.listaClientes) {
-            if (cList.getCadastro().equals(cliente)) { 
-                result = this.listaClientes.remove(cList);
+        Iterator<Cliente> itClientes = this.listaClientes.iterator();
+        while (itClientes.hasNext()) { // percorre a lista usando Iterator
+            Cliente cList = itClientes.next();
+            if (cList.getCadastro().equals(cliente)) {
+                itClientes.remove();
             }
-        } // removeu o cliente da lista de clientes
+        }
 
-        for (Sinistro sList : this.listaSinistros) {
+        Iterator<Sinistro> itSinistros = this.listaSinistros.iterator();
+        while (itSinistros.hasNext()) { // percorre a lista usando Iterator
+            Sinistro sList = itSinistros.next();
             if (sList.getCliente().getCadastro().equals(cliente)) {
-                result = this.listaSinistros.remove(sList);
+                itSinistros.remove();
             }
-        } // removeu todos os sinistros associados a esse cliente
-        return result;
+        }
+        return true;
+    }
+
+    public boolean cadastrarVeiculo(Veiculo v, String cadastro) {
+        for (Cliente c : listaClientes) {
+            if (c.getCadastro().equals(cadastro)) {
+                c.adicionarVeiculo(v);
+                return true;
+            }
+        }
+        return false; // o cliente que você tentou adicionar um veiculo não existe
+    }
+
+    public boolean excluirVeiculo(Veiculo v, String cadastro) {
+        for (Cliente c : listaClientes) {
+            if (c.getCadastro().equals(cadastro)) {
+                c.removerVeiculo(v);
+                return true;
+            }
+        }
+        return false; // cliente que você tentou remover o veículo não existe
     }
 
     public List<Cliente> listarClientes(String tipoCliente) {
@@ -107,6 +131,7 @@ public class Seguradora {
     public boolean gerarSinistro(String data, String endereco, Veiculo veiculo, Cliente cliente) {
         Sinistro novoSinistro = new Sinistro(data, endereco, this, veiculo, cliente);
         boolean result = this.listaSinistros.add(novoSinistro); // não precisa verificar se está na lista porque cada sinistro tem um ID diferente
+        calculaPrecoSeguroCliente(cliente);
         return result;
     }
 
@@ -120,6 +145,25 @@ public class Seguradora {
         return result;
     }
 
+    public double calculaPrecoSeguroCliente(Cliente client) {
+        int qtdeSinistros = 0;
+        for (Sinistro sin : listaSinistros) {
+            if ((sin.getCliente().getCadastro()).equals(client.getCadastro())) {
+                qtdeSinistros++;
+            }
+        }
+        double PrecoSeguroCliente = client.calculaScore() * (1+ qtdeSinistros);
+        client.setValorSeguro(PrecoSeguroCliente);
+        return PrecoSeguroCliente;
+    }
+
+    public double calculaReceita() {
+        double receita = 0;
+        for (Cliente client : listaClientes) {
+            receita+=client.getValorSeguro();
+        }
+        return receita;
+    }
 
     public String toString() {
         return 
