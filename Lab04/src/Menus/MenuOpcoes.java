@@ -1,8 +1,5 @@
-/* enum para menu externo
-Cada constante é vista como uma descrição e uma lista de outras constantes (que são as constantes do submenu)
+package Menus;
 
-new SubmenuOpcoes[]{} cria uma lista de constantes do submenu.
-*/
 public enum MenuOpcoes {
 	CADASTROS("Cadastros", new SubmenuOpcoes[] {
 			SubmenuOpcoes.CADASTRAR_CLIENTE,
@@ -11,7 +8,7 @@ public enum MenuOpcoes {
 			SubmenuOpcoes.VOLTAR
 	}),
 	LISTAR("Listar", new SubmenuOpcoes[] {
-			SubmenuOpcoes.LISTAR_CLIENTES,
+			SubmenuOpcoes.LISTAR_CLIENTES_SEG,
 			SubmenuOpcoes.LISTAR_SINISTROS_SEG,
 			SubmenuOpcoes.LISTAR_SINISTROS_CLIENTE,
 			SubmenuOpcoes.LISTAR_VEICULOS_CLIENTE,
@@ -28,17 +25,15 @@ public enum MenuOpcoes {
 	CALCULAR_RECEITA("Calcular Receita", new SubmenuOpcoes[] {SubmenuOpcoes.VOLTAR}),
 	SAIR("Sair", new SubmenuOpcoes[] {});
 	
-	//atributos
+	
 	private final String descricao;
 	private final SubmenuOpcoes[] submenu;
 	
-	//Construtor
 	MenuOpcoes(String descricao, SubmenuOpcoes[] submenu){
 		this.descricao = descricao;
 		this.submenu = submenu;
 	}
 	
-	//getters
 	public String getDescricao() {
 		return descricao;
 	}

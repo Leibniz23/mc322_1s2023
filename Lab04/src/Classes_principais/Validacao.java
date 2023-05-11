@@ -19,12 +19,17 @@ public class Validacao {
         }
 
         /* Primeiro digito verificador */
+
         int primeiro = 0;
         for (int i=0, j=10; i<n_semdigito && j>=(n-n_semdigito); i++, j--) { // n - n_semdigito é 2
             primeiro += (Character.digit(v_cpf[i],10))*j;
         }
         primeiro = primeiro % n;
-        primeiro = n - primeiro;
+        if (primeiro < 2) {
+            primeiro = 0;
+        } else {
+            primeiro = n - primeiro;
+        }
         if (primeiro != Character.digit(v_cpf[n-2], 10)) {
             return false;
         }
@@ -92,5 +97,18 @@ public class Validacao {
         } else {
             return false;
         }
+    }
+
+    public static boolean validarNome(String nome) {
+        /*
+         * Verifica se o nome passado tem apenas letras e espaços
+         */
+
+        for (int i=0; i< nome.length(); i++) {
+            if (!Character.isLetter(nome.charAt(i)) && nome.charAt(i)!=' ') {
+                return false;
+            }
+        }
+        return true;   
     }
 }

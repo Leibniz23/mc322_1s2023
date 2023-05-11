@@ -12,16 +12,16 @@ public class ClientePF extends Cliente {
 
     public ClientePF(String nome, String endereco, String cpf, String educacao, LocalDate dataNascimento,
                     String genero, String classeEconomica, Veiculo ... listaVeiculos) {
-    super(nome, endereco);
-    this.CPF = cpf.replaceAll("[^0-9]", ""); // só os números do CPF
-    this.dataLicenca = LocalDate.now(); // LocalDate.get para pegar dia mes e ano
-    this.educacao = educacao;
-    this.dataNascimento = dataNascimento;
-    this.genero = genero;
-    this.classeEconomica = classeEconomica;
-    for (Veiculo veiculo : listaVeiculos) {
-        this.listaVeiculos.add(veiculo);
-    }
+        super(nome, endereco);
+        this.CPF = cpf.replaceAll("[^0-9]", ""); // só os números do CPF
+        this.dataLicenca = LocalDate.now();
+        this.educacao = educacao;
+        this.dataNascimento = dataNascimento;
+        this.genero = genero;
+        this.classeEconomica = classeEconomica;
+        for (Veiculo veiculo : listaVeiculos) {
+            this.adicionarVeiculo(veiculo);
+        }
     }
 
     @Override
@@ -75,20 +75,21 @@ public class ClientePF extends Cliente {
 
     @Override
     public double calculaScore() {
-        int idade = calcIdade();
+        int carros, idade = calcIdade();
+        double score;
         if (18<=idade || idade < 30) {
-            int carros = this.getListVeiculos().size();
-            double score = CalcSeguro.VALOR_BASE.getFator() * CalcSeguro.FATOR_18_30.getFator() * carros;
+            carros = this.getListaVeiculos().size();
+            score = CalcSeguro.VALOR_BASE.getFator() * CalcSeguro.FATOR_18_30.getFator() * carros;
             return score;
 
         } else if (30<=idade || idade<60) {
-            int carros = this.getListVeiculos().size();
-            double score = CalcSeguro.VALOR_BASE.getFator() * CalcSeguro.FATOR_30_60.getFator() * carros;
+            carros = this.getListaVeiculos().size();
+            score = CalcSeguro.VALOR_BASE.getFator() * CalcSeguro.FATOR_30_60.getFator() * carros;
             return score;
 
         } else if (60<=idade || idade<90) {
-            int carros = this.getListVeiculos().size();
-            double score = CalcSeguro.VALOR_BASE.getFator() * CalcSeguro.FATOR_60_90.getFator() * carros;
+            carros = this.getListaVeiculos().size();
+            score = CalcSeguro.VALOR_BASE.getFator() * CalcSeguro.FATOR_60_90.getFator() * carros;
             return score;
 
         } else {
@@ -104,7 +105,7 @@ public class ClientePF extends Cliente {
             "DataNascimento: " + getDataNascimento() + "\n" +
             "Educacao: " + getEducacao() + "\n" +
             "Genero: " + getGenero() + "\n" +
-            "Classe Economica: " + getClasseEconomica() + "\n";
+            "Classe Economica: " + getClasseEconomica() + "\n" +
+            "Valor do Seguro: " + Double.toString(getValorSeguro()) + "\n";
     }
 }
-
