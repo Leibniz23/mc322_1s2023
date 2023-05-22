@@ -1,41 +1,62 @@
 package Classes_principais;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class ClientePF extends Cliente {
     final String CPF;
-    private LocalDate dataLicenca;
+    private String genero;
     private String educacao;
     private LocalDate dataNascimento;
-    private String genero;
-    private String classeEconomica;
+    private List<Veiculo> listaVeiculos;
 
-    public ClientePF(String nome, String endereco, String cpf, String educacao, LocalDate dataNascimento,
-                    String genero, String classeEconomica, Veiculo ... listaVeiculos) {
-        super(nome, endereco);
+    public ClientePF(String nome, String telefone, String endereco, String email, String cpf,
+                    String genero, String educacao, LocalDate dataNascimento){
+        super(nome, telefone, endereco, email);
         this.CPF = cpf.replaceAll("[^0-9]", ""); // só os números do CPF
-        this.dataLicenca = LocalDate.now();
         this.educacao = educacao;
         this.dataNascimento = dataNascimento;
         this.genero = genero;
-        this.classeEconomica = classeEconomica;
-        for (Veiculo veiculo : listaVeiculos) {
-            this.adicionarVeiculo(veiculo);
+    }
+
+    public boolean addVeiculo(Veiculo v) {
+        /*
+         * Adiciona o objeto veiculo passado a lista de
+         * veículos do cliente
+         */
+        boolean existe = false;
+        for (Veiculo iV : listaVeiculos) {
+            if (iV.getPlaca().equals(v.getPlaca())) {
+                existe = true;
+            }
         }
+        if (!existe) {
+            this.listaVeiculos.add(v);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean remVeiculo(String placa) {
+        /*
+         * Remove o veículo que tem a placa passada
+         * da lista de veículos do cliente
+         */
+        Iterator<Veiculo> itVeiculo = this.listaVeiculos.iterator();
+        while (itVeiculo.hasNext()) { // percorre a lista usando Iterator
+            Veiculo vList = itVeiculo.next();
+            if (vList.getPlaca().equals(placa)) {
+                itVeiculo.remove();
+                return true;
+            }
+        }
+        return false; // o veículo não existe
     }
 
     @Override
     public String getCadastro() {
         return this.CPF;
-    }
-
-    public void setdataLicenca(LocalDate dataLicenca) {
-        this.dataLicenca = dataLicenca;
-    }
-
-    public String getDataLicenca() {
-        String data = this.dataLicenca.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        return data;
     }
 
     public String getEducacao() {
@@ -54,20 +75,26 @@ public class ClientePF extends Cliente {
         this.genero = genero;
     }
 
-    public String getClasseEconomica() {
-        return this.classeEconomica;
-    }
-
-    public void setClasseEconomica(String classeEconomica) {
-        this.classeEconomica = classeEconomica;
-    }
-
     public String getDataNascimento() { // não tem set porque ninguém muda de data de nascimento
         String data = this.dataNascimento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         return data;
     }
 
-    private int calcIdade() {
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public List<Veiculo> getListaVeiculos() {
+        return this.listaVeiculos;
+    }
+
+    public void setListaVeiculos(List<Veiculo> listaVeiculos) {
+        this.listaVeiculos = listaVeiculos;
+    }
+
+
+///////// por hr manter essa pt, possivelmente mandar pra seguro dps
+    public int calcIdade() {
         int ano_nascimento = this.dataNascimento.getYear();
         int idade = LocalDate.now().getYear() - ano_nascimento;
         return idade;
@@ -97,15 +124,19 @@ public class ClientePF extends Cliente {
         }
     }
 
+/////// até aqui
+
     @Override
     public String toString() {
-        return
+        /*
+         * Não coloquei todas as informações, como a maioria dos atributos herdados,
+         * para facilitar a visualização
+         */
+        return        
+            "Nome: " + getNome() + "\n" +
             "CPF: " + getCadastro() + "\n" +
-            "DataLicenca: " + getDataLicenca() + "\n" +
             "DataNascimento: " + getDataNascimento() + "\n" +
             "Educacao: " + getEducacao() + "\n" +
-            "Genero: " + getGenero() + "\n" +
-            "Classe Economica: " + getClasseEconomica() + "\n" +
-            "Valor do Seguro: " + Double.toString(getValorSeguro()) + "\n";
+            "Genero: " + getGenero() + "\n";
     }
 }

@@ -2,9 +2,9 @@ package Classes_principais;
 
 public enum CalcSeguro {
     VALOR_BASE(100.0),
-    FATOR_18_30(1.2),
+    FATOR_ATE_30(1.25),
     FATOR_30_60(1.0),
-    FATOR_60_90(1.5);
+    FATOR_ACIMA_60(1.5);
 
     private final double fator;
 

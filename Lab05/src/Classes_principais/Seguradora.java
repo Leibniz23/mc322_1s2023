@@ -58,6 +58,14 @@ public class Seguradora {
     public List<Sinistro> listarSinistros() {
         return this.listaSinistros;
     }
+
+    public boolean gerarSeguro() {
+        // criar um seguro e colocar na lista
+    }
+
+    public boolean cancelarSeguro() {
+        // remover da lista
+    }
     
     public boolean cadastrarCliente(Cliente newClient) { // Supõe que o cliente passado é válido
         for (Cliente client : this.listaClientes) {
