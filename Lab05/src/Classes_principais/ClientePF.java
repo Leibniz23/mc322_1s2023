@@ -19,7 +19,7 @@ public class ClientePF extends Cliente {
         this.genero = genero;
     }
 
-    public boolean addVeiculo(Veiculo v) {
+    public boolean cadastrarVeiculo(Veiculo v) {
         /*
          * Adiciona o objeto veiculo passado a lista de
          * veículos do cliente
@@ -38,7 +38,7 @@ public class ClientePF extends Cliente {
         }
     }
 
-    public boolean remVeiculo(String placa) {
+    public boolean removerVeiculo(String placa) {
         /*
          * Remove o veículo que tem a placa passada
          * da lista de veículos do cliente

@@ -3,6 +3,8 @@ package Classes_principais;
 import java.time.LocalDate;
 import java.util.*;
 
+import javax.print.DocFlavor.STRING;
+
 public class Condutor {
     private final String CPF;
     private String nome;
@@ -11,6 +13,9 @@ public class Condutor {
     private String email;
     private LocalDate dataNascimento;
     private List<Sinistro> listaSinistros;
+    // static map que armazena os condutores existentes, pra buscar um basta buscar pelo cpf (em o(1))
+    // quando for criar ou alterar um condutor, adicionar nesse map
+    Map<String, Condutor> = new 
 
 
     public Condutor(String CPF, String nome, String telefone, String endereco, String email, LocalDate dataNascimento) {

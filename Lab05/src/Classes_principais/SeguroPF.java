@@ -31,6 +31,8 @@ public class SeguroPF extends Seguro{
     }
 
     public double calcularValor() {
+        // qtdSinistrosCliente = iterar pelos seguros do cliente e somar os listaSinistros.size
+        // qtdSinistrosCondutor = iterar pelos condutores e 
         int carros, idade = cliente.calcIdade();
         double score = CalcSeguro.VALOR_BASE.getFator() * (1+ 1/(cliente.getListaVeiculos().size())) *
                         (2+ ); // a lista de sinistros desse seguro é inteira do cliente, mesmo tendo outros condutores autorizados?
