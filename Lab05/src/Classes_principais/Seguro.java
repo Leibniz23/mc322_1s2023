@@ -80,4 +80,32 @@ public abstract class Seguro {
         // pensar em como fazer ainda
     }
 
+    public boolean autorizarCondutor(Condutor c) { // adiciona esse condutor na lista de condutores
+        boolean existe = false;
+        for (Condutor iC : listaCondutores) {
+            if (iC.getCPF().equals(c.getCPF())) {
+                existe = true;
+            }
+        }
+        if (!existe) {
+            this.listaCondutores.add(c);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean desautorizarCondutor(Condutor c) { // remove esse condutor na lista de condutores
+        Iterator<Condutor> itCondutor = this.listaCondutores.iterator();
+        while (itCondutor.hasNext()) { // percorre a lista usando Iterator
+            Condutor cList = itCondutor.next();
+            if (cList.getCPF().equals(c.getCPF())) {
+                itCondutor.remove();
+                return true;
+            }
+        }
+        return false; // se chegou aqui o condutor não está cadastrado
+    }
+
+    public abstract Cliente getCliente();
 }

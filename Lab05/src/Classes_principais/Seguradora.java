@@ -7,7 +7,7 @@ public class Seguradora {
     private String telefone;
     private String email;
     private String endereco;
-    private List<Seguro> listaSeguro;
+    private List<Seguro> listaSeguros;
     private List<Cliente> listaClientes;
 
     public Seguradora(String nome, String telefone, String email, String endereco) {
@@ -15,7 +15,7 @@ public class Seguradora {
         this.telefone = telefone;
         this.email = email;
         this.endereco = endereco;
-        this.listaSinistros = new ArrayList<Seguro>();
+        this.listaSeguros = new ArrayList<Seguro>();
         this.listaClientes = new ArrayList<Cliente>();
     }
 
@@ -213,6 +213,25 @@ public class Seguradora {
         c2.limparVeiculos();
         calculaPrecoSeguroCliente(c1);
         calculaPrecoSeguroCliente(c2);
+    }
+
+    public List <Seguro> getSegurosPorCliente(Cliente cliente) {
+        List <Seguro> segurosCliente = new ArrayList<Seguro>() ;
+        for (Seguro seguro : this.listaSeguros) {
+            if (seguro.getCliente().equals(cliente)) {
+                segurosCliente.add(seguro);
+            }
+        }
+        return segurosCliente ;
+    }
+
+    public List <Sinistro> getSinistrosPorCliente(Cliente cliente) {
+        for (Seguro seguro : this.listaSeguros) {
+            if (seguro.getCliente().equals(cliente)) {
+                return seguro.getListaSinistros();
+            }
+        }
+        return null; // esse cliente não tem sinistros
     }
 
     public String toString() {

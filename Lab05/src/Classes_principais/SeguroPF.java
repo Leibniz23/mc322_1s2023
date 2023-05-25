@@ -32,9 +32,10 @@ public class SeguroPF extends Seguro{
 
     public double calcularValor() {
         int carros, idade = cliente.calcIdade();
-        double score = CalcSeguro.VALOR_BASE.getFator() * (1+ 1/(cliente.getListaVeiculos().size())) *
-                        (2+ ); // a lista de sinistros desse seguro é inteira do cliente, mesmo tendo outros condutores autorizados?
-        if (idade < 30) {
+        double score = CalcSeguro.VALOR_BASE.getFator() * (1+ 1/(cliente.getListaVeiculos().size()+2)) *
+                        (2+ (this.getListaSinistros().size()/10)) *
+                        (5+ ); // a lista de sinistros desse seguro é inteira do cliente, mesmo tendo outros condutores autorizados?
+        if (idade < 30) { // iterar lista de condutores, cada condutor tem uma lista de sinistros, somar todos
 
 
         } else if (30 < idade || idade < 60) {
