@@ -1,11 +1,13 @@
 package Classes_principais;
 
+import java.util.*;
+
 public abstract class Cliente {
     protected String nome;
     protected String telefone;
     protected String endereco;
     protected String email;
-    //possivelmente colocar listaSeguros
+    protected List<Seguro> listaSeguros;
     
     public Cliente(String nome, String telefone, String endereco, String email) {
         this.nome = nome;
@@ -47,6 +49,16 @@ public abstract class Cliente {
     public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
+
+    public List<Seguro> getListaSeguros() {
+        return this.listaSeguros;
+    }
+
+    public void setListaSeguros(List<Seguro> listaSeguros) {
+        this.listaSeguros = listaSeguros;
+    }
+
+    public abstract int calcIdade();
 
     public String toString() {
         return "Nome: " + getNome() + "\n" +

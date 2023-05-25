@@ -1,6 +1,7 @@
 package Classes_principais;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClientePJ extends Cliente {
@@ -9,17 +10,15 @@ public class ClientePJ extends Cliente {
     private int qtdeFuncionarios;
     private List<Frota> listaFrota;
 
-    public ClientePJ(String nome, String endereco, String cnpj, LocalDate dataFundacao, int funcionarios, Veiculo ... lista_Veiculos) {
-        super(nome,endereco);
+    public ClientePJ(String nome, String telefone, String endereco, String email,
+                        String cnpj, LocalDate dataFundacao, int funcionarios) {
+        super(nome, telefone, endereco, email);
         this.CNPJ = cnpj.replaceAll("[^0-9]", "");
         this.dataFundacao = dataFundacao;
         this.qtdeFuncionarios = funcionarios;
-        for (Veiculo veiculo : listaVeiculos) {
-            this.adicionarVeiculo(veiculo);
-        }
+        this.listaFrota = new ArrayList<Frota>();
     }
 
-    @Override
     public String getCadastro() {
         return this.CNPJ;
     }
@@ -41,6 +40,21 @@ public class ClientePJ extends Cliente {
         this.qtdeFuncionarios = qtdeFuncionarios;
     }
 
+    
+    public List<Frota> getListaFrota() {
+        return this.listaFrota;
+    }
+    
+    public void setListaFrota(List<Frota> listaFrota) {
+        this.listaFrota = listaFrota;
+    }
+    
+    public int calcIdade() {
+        int ano_fundacao = this.dataFundacao.getYear();
+        int idade = LocalDate.now().getYear() - ano_fundacao;
+        return idade;
+    }
+    
     public boolean atualizarFrota(String code, String acao, String placa) {
         /*
          * Adiciona ou remove, da frota indicada, um veículo
@@ -58,14 +72,6 @@ public class ClientePJ extends Cliente {
         if (code.equals("delete")) {
 
         }
-    }
-
-    public 
-
-    @Override
-    public double calculaScore() {
-        double score = CalcSeguro.VALOR_BASE.getFator() * (1+ (getQtdeFuncionarios()/100) * getListaVeiculos().size());
-        return score;
     }
 
     @Override

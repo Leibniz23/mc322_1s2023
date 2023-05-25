@@ -1,15 +1,17 @@
 package Classes_principais;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class Frota {
-    private String code;
+    private final int code;
     private List<Veiculo> listaVeiculos;
+    private static int cont = 1;
 
-    public Frota(String code, List<Veiculo> listaVeiculos) {
-        this.code = code;
-        this.listaVeiculos = listaVeiculos;
+    public Frota() {
+        this.code = cont++;
+        this.listaVeiculos = new ArrayList<Veiculo>();
     }
 
     public boolean addVeiculo(Veiculo v) {
@@ -39,12 +41,8 @@ public class Frota {
         return false; // o veículo não existe
     }
 
-    public String getCode() {
+    public int getCode() {
         return this.code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public List<Veiculo> getListaVeiculos() {

@@ -13,6 +13,7 @@ public class Condutor {
     private String email;
     private LocalDate dataNascimento;
     private List<Sinistro> listaSinistros;
+    
     // static map que armazena os condutores existentes, pra buscar um basta buscar pelo cpf (em o(1))
     // quando for criar ou alterar um condutor, adicionar nesse map
     Map<String, Condutor> = new 

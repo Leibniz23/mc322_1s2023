@@ -10,7 +10,7 @@ public abstract class Seguro {
     protected Seguradora seguradora;
     protected List<Sinistro> listaSinistros;
     protected List<Condutor> listaCondutores;
-    protected int valorMensal;
+    protected double valorMensal;
     private static int cont = 1;
 
     public Seguro(LocalDate dataInicio, LocalDate dataFim, Seguradora seguradora) {
@@ -20,6 +20,7 @@ public abstract class Seguro {
         this.seguradora = seguradora;
         this.listaSinistros = new ArrayList<Sinistro>();
         this.listaCondutores = new ArrayList<Condutor>();
+        this.valorMensal = calcularValor();
     }
 
     public int getID() {
@@ -66,7 +67,7 @@ public abstract class Seguro {
         this.listaCondutores = listaCondutores;
     }
 
-    public int getValorMensal() {
+    public double getValorMensal() {
         return this.valorMensal;
     }
 
@@ -74,11 +75,9 @@ public abstract class Seguro {
         this.valorMensal = valorMensal;
     }
 
-    public abstract int calcularValor();
+    public abstract double calcularValor();
 
-    public abstract Sinistro gerarSinistro(); {
-        // pensar em como fazer ainda
-    }
+    public abstract boolean gerarSinistro(LocalDate data, String endereco,Condutor condutor);
 
     public boolean autorizarCondutor(Condutor c) { // adiciona esse condutor na lista de condutores
         boolean existe = false;

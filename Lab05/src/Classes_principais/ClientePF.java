@@ -54,7 +54,6 @@ public class ClientePF extends Cliente {
         return false; // o veículo não existe
     }
 
-    @Override
     public String getCadastro() {
         return this.CPF;
     }

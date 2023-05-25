@@ -60,6 +60,6 @@ public class Sinistro {
             "Data: " + getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n" + // só transforma a data em stirng
             "Endereco: " + getEndereco() + "\n" +
             "ID do seguro: " + getSeguro().getID() + "\n" + // só o ID para facilitar a visualização
-            "Cadastro do Condutor: " + getCondutor().getCadastro() + "\n";
+            "Cadastro do Condutor: " + getCondutor().getCPF() + "\n";
     }
 }
