@@ -31,6 +31,8 @@ public class SeguroPF extends Seguro{
     }
 
     public double calcularValor() {
+        // qtdSinistrosCliente = iterar pelos seguros do cliente e somar os listaSinistros.size
+        // qtdSinistrosCondutor = iterar pelos condutores e 
         int carros, idade = cliente.calcIdade();
         double score = CalcSeguro.VALOR_BASE.getFator() * (1+ 1/(cliente.getListaVeiculos().size()+2)) *
                         (2+ (this.getListaSinistros().size()/10)) *

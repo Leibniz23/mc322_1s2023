@@ -5,6 +5,7 @@ public abstract class Cliente {
     protected String telefone;
     protected String endereco;
     protected String email;
+    //possivelmente colocar listaSeguros
     
     public Cliente(String nome, String telefone, String endereco, String email) {
         this.nome = nome;
