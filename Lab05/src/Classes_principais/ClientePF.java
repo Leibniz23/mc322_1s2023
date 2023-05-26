@@ -8,6 +8,7 @@ public class ClientePF extends Cliente {
     private String genero;
     private String educacao;
     private LocalDate dataNascimento;
+    protected List<SeguroPF> listaSeguros;
     private List<Veiculo> listaVeiculos;
 
     public ClientePF(String nome, String telefone, String endereco, String email, String cpf,
@@ -91,39 +92,39 @@ public class ClientePF extends Cliente {
         this.listaVeiculos = listaVeiculos;
     }
 
-
-///////// por hr manter essa pt, possivelmente mandar pra seguro dps
     public int calcIdade() {
         int ano_nascimento = this.dataNascimento.getYear();
         int idade = LocalDate.now().getYear() - ano_nascimento;
         return idade;
     }
 
-    @Override
-    public double calculaScore() {
-        int carros, idade = calcIdade();
-        double score;
-        if (18<=idade || idade < 30) {
-            carros = this.getListaVeiculos().size();
-            score = CalcSeguro.VALOR_BASE.getFator() * CalcSeguro.FATOR_18_30.getFator() * carros;
-            return score;
-
-        } else if (30<=idade || idade<60) {
-            carros = this.getListaVeiculos().size();
-            score = CalcSeguro.VALOR_BASE.getFator() * CalcSeguro.FATOR_30_60.getFator() * carros;
-            return score;
-
-        } else if (60<=idade || idade<90) {
-            carros = this.getListaVeiculos().size();
-            score = CalcSeguro.VALOR_BASE.getFator() * CalcSeguro.FATOR_60_90.getFator() * carros;
-            return score;
-
-        } else {
-            return -1.0; // Score inválido
-        }
+    public List<SeguroPF> getListaSeguros() {
+        return this.listaSeguros;
     }
 
-/////// até aqui
+    public void setListaSeguros(List<SeguroPF> listaSeguros) {
+        this.listaSeguros = listaSeguros;
+    }
+
+    public boolean adicionarSeguro(SeguroPF seguro) {
+        return this.listaSeguros.add(seguro);
+    }
+
+    public boolean removerSeguro(int id) {
+        Iterator<SeguroPF> itSeguro = this.listaSeguros.iterator();
+        while (itSeguro.hasNext()) { // percorre a lista usando Iterator
+            Seguro sList = itSeguro.next();
+            if (sList.getID() == id) {
+                itSeguro.remove();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void limparSeguros() {
+        this.listaSeguros.clear();
+    }
 
     @Override
     public String toString() {

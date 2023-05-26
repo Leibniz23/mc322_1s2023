@@ -3,8 +3,6 @@ package Classes_principais;
 import java.time.LocalDate;
 import java.util.*;
 
-import javax.print.DocFlavor.STRING;
-
 public class Condutor {
     private final String CPF;
     private String nome;
@@ -13,10 +11,10 @@ public class Condutor {
     private String email;
     private LocalDate dataNascimento;
     private List<Sinistro> listaSinistros;
-    
+    private static List<Condutor> listaCondutores = new ArrayList<Condutor> ();
+
     // static map que armazena os condutores existentes, pra buscar um basta buscar pelo cpf (em o(1))
     // quando for criar ou alterar um condutor, adicionar nesse map
-    Map<String, Condutor> = new 
 
 
     public Condutor(String CPF, String nome, String telefone, String endereco, String email, LocalDate dataNascimento) {
@@ -27,6 +25,7 @@ public class Condutor {
         this.email = email;
         this.dataNascimento = dataNascimento;
         this.listaSinistros = new ArrayList<Sinistro> ();
+        listaCondutores.add(this);
     }
 
     public String getCPF() {
@@ -82,11 +81,6 @@ public class Condutor {
     }
 
     public boolean addSinistro(Sinistro sinistro) {
-        for (Sinistro sin : this.listaSinistros) { // para garantir que esse sinistro não foi adicionado antes
-            if (sin.getID() == sinistro.getID()) {
-                return false;
-            }
-        }
         this.listaSinistros.add(sinistro);
         return true;
     }

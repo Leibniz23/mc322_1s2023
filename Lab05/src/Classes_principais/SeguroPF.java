@@ -67,7 +67,7 @@ public class SeguroPF extends Seguro{
         return false;
     }
 
-    public boolean gerarSinistro(LocalDate data, String endereco,Condutor condutor) {
+    public boolean gerarSinistro(LocalDate data, String endereco, Condutor condutor) {
         Sinistro novoSinistro = new Sinistro(data, endereco, this, condutor);
         boolean result = this.listaSinistros.add(novoSinistro);
         if (result) { // só para garantir que foi adicionado na lista
@@ -89,7 +89,7 @@ public class SeguroPF extends Seguro{
         for (Condutor condutor : this.listaCondutores) {
             qntdSinistrosCondutor += condutor.getListaSinistros().size(); // soma de todos os sinsitros de todos os condutores desse seguro
         }
-        double score = CalcSeguro.VALOR_BASE.getFator() * (1+ 1/(cliente.getListaVeiculos().size()+2)) *
+        double score = CalcSeguro.VALOR_BASE.getFator() * (1+ 1/(cliente.getListaSeguros().size()+2)) *
                         (2+ (qntdSinistrosCliente/10)) *
                         (5+ (qntdSinistrosCondutor/10)); // a lista de sinistros desse seguro é inteira do cliente, mesmo tendo outros condutores autorizados?
         if (idade < 30) {

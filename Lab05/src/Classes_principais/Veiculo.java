@@ -3,6 +3,7 @@ public class Veiculo {
     private String placa;
     private String marca;
     private String modelo;
+    private Seguro seguro;
     private int anoFabricacao;
 
     public Veiculo(String placa, String marca, String modelo, int anoFabricacao) {
@@ -46,6 +47,13 @@ public class Veiculo {
         this.anoFabricacao = anoFabricacao;
     }
 
+    public Seguro getSeguro() {
+        return this.seguro;
+    }
+
+    public void setSeguro(Seguro seguro) {
+        this.seguro = seguro;
+    }
 
     public String toString() {
         return

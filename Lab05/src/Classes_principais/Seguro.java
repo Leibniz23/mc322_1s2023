@@ -79,32 +79,18 @@ public abstract class Seguro {
 
     public abstract boolean gerarSinistro(LocalDate data, String endereco,Condutor condutor);
 
-    public boolean autorizarCondutor(Condutor c) { // adiciona esse condutor na lista de condutores
-        boolean existe = false;
-        for (Condutor iC : listaCondutores) {
-            if (iC.getCPF().equals(c.getCPF())) {
-                existe = true;
-            }
-        }
-        if (!existe) {
-            this.listaCondutores.add(c);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean desautorizarCondutor(Condutor c) { // remove esse condutor na lista de condutores
-        Iterator<Condutor> itCondutor = this.listaCondutores.iterator();
-        while (itCondutor.hasNext()) { // percorre a lista usando Iterator
-            Condutor cList = itCondutor.next();
-            if (cList.getCPF().equals(c.getCPF())) {
-                itCondutor.remove();
-                return true;
-            }
-        }
-        return false; // se chegou aqui o condutor não está cadastrado
-    }
+    public abstract boolean autorizarCondutor(Condutor c); // adiciona esse condutor na lista de condutores
+        
+    public abstract boolean desautorizarCondutor(String cpf);
 
     public abstract Cliente getCliente();
+
+    public void setCliente(Cliente c) { 
+        /*
+        Se eu colocasse como abstract não daria certo no metodo
+        transferir seguro, pois eu não sei se o cliente será do
+        tipo PF ou PJ, e definir abstract setCliente(Cliente c) também
+        não da certo, então o jeito foi usar override mesmo
+        */
+    }
 }
