@@ -6,6 +6,7 @@ public abstract class Cliente {
     protected String nome;
     protected String telefone;
     protected String endereco;
+    protected List<Seguro> listaSeguros;
     protected String email;
     
     public Cliente(String nome, String telefone, String endereco, String email) {
@@ -49,7 +50,15 @@ public abstract class Cliente {
         this.endereco = endereco;
     }
 
+    public abstract boolean adicionarSeguro(Seguro seguro);
+
+    public abstract boolean removerSeguro(int id);
+
     public abstract void limparSeguros();
+
+    public abstract List<Seguro> getListaSeguros();
+
+    public abstract void setListaSeguros(List<Seguro> seguro);
 
     public abstract int calcIdade();
 

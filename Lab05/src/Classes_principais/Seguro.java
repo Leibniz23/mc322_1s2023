@@ -85,12 +85,14 @@ public abstract class Seguro {
 
     public abstract Cliente getCliente();
 
-    public void setCliente(Cliente c) { 
-        /*
-        Se eu colocasse como abstract não daria certo no metodo
-        transferir seguro, pois eu não sei se o cliente será do
-        tipo PF ou PJ, e definir abstract setCliente(Cliente c) também
-        não da certo, então o jeito foi usar override mesmo
-        */
-    }
+    public abstract boolean setCliente(ClientePF c);
+
+    public abstract boolean setCliente(ClientePJ c);
+    //     /*
+    //     Se eu colocasse como abstract não daria certo no metodo
+    //     transferir seguro, pois eu não sei se o cliente será do
+    //     tipo PF ou PJ, e definir abstract setCliente(Cliente c) também
+    //     não da certo, então o jeito foi usar override mesmo
+    //     */
+    // }
 }

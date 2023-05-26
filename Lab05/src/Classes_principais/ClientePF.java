@@ -8,7 +8,6 @@ public class ClientePF extends Cliente {
     private String genero;
     private String educacao;
     private LocalDate dataNascimento;
-    protected List<SeguroPF> listaSeguros;
     private List<Veiculo> listaVeiculos;
 
     public ClientePF(String nome, String telefone, String endereco, String email, String cpf,
@@ -98,20 +97,20 @@ public class ClientePF extends Cliente {
         return idade;
     }
 
-    public List<SeguroPF> getListaSeguros() {
+    public List<Seguro> getListaSeguros() {
         return this.listaSeguros;
     }
 
-    public void setListaSeguros(List<SeguroPF> listaSeguros) {
+    public void setListaSeguros(List<Seguro> listaSeguros) {
         this.listaSeguros = listaSeguros;
     }
 
-    public boolean adicionarSeguro(SeguroPF seguro) {
+    public boolean adicionarSeguro(Seguro seguro) {
         return this.listaSeguros.add(seguro);
     }
 
     public boolean removerSeguro(int id) {
-        Iterator<SeguroPF> itSeguro = this.listaSeguros.iterator();
+        Iterator<Seguro> itSeguro = this.listaSeguros.iterator();
         while (itSeguro.hasNext()) { // percorre a lista usando Iterator
             Seguro sList = itSeguro.next();
             if (sList.getID() == id) {

@@ -7,7 +7,7 @@ public class ClientePJ extends Cliente {
     final String CNPJ ;
     private LocalDate dataFundacao;
     private int qtdeFuncionarios;
-    protected List<SeguroPJ> listaSeguros;
+    protected List<Seguro> listaSeguros;
     private List<Frota> listaFrota;
 
     public ClientePJ(String nome, String telefone, String endereco, String email,
@@ -116,20 +116,20 @@ public class ClientePJ extends Cliente {
         return null; // essa frota não existe
     }
 
-    public List<SeguroPJ> getListaSeguros() {
+    public List<Seguro> getListaSeguros() {
         return this.listaSeguros;
     }
 
-    public void setListaSeguros(List<SeguroPJ> listaSeguros) {
+    public void setListaSeguros(List<Seguro> listaSeguros) {
         this.listaSeguros = listaSeguros;
     }
 
-    public boolean adicionarSeguro(SeguroPJ seguro) {
+    public boolean adicionarSeguro(Seguro seguro) {
         return this.listaSeguros.add(seguro);
     }
 
     public boolean removerSeguro(int id) {
-        Iterator<SeguroPJ> itSeguro = this.listaSeguros.iterator();
+        Iterator<Seguro> itSeguro = this.listaSeguros.iterator();
         while (itSeguro.hasNext()) { // percorre a lista usando Iterator
             Seguro sList = itSeguro.next();
             if (sList.getID() == id) {

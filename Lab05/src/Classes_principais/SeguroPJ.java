@@ -25,8 +25,13 @@ public class SeguroPJ extends Seguro{
         return this.cliente;
     }
 
-    public void setCliente(ClientePJ cliente) {
+    public boolean setCliente(ClientePJ cliente) {
         this.cliente = cliente;
+        return true;
+    }
+
+    public boolean setCliente(ClientePF cliente) {
+        return false;
     }
 
     public boolean autorizarCondutor(Condutor c) {

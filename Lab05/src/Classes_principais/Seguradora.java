@@ -59,10 +59,31 @@ public class Seguradora {
         return this.listaSeguros;
     }
 
-    public void gerarSeguro(LocalDate dataInicio, LocalDate dataFim,
+    public List<Cliente> listarClientes(String tipoCliente) {
+        List<Cliente> clientes = new ArrayList<Cliente>();
+        if (tipoCliente.equals("PF")) {
+            for (Cliente c : this.listaClientes) {
+                if (c instanceof ClientePF) {
+                    clientes.add(c);
+                }
+            }
+        } else if (tipoCliente.equals("PJ")) {
+            for (Cliente c : this.listaClientes) {
+                if (c instanceof ClientePJ) {
+                    clientes.add(c);
+                }
+            }
+        } else {
+            System.out.println("Tipo inválido");
+        }
+        return clientes;
+    }
+
+    public int gerarSeguro(LocalDate dataInicio, LocalDate dataFim,
                                 ClientePF clientepf, Veiculo veiculo) { // do PF
         Seguro novoSeguro = new SeguroPF(dataInicio, dataFim, this, veiculo, clientepf);
         clientepf.adicionarSeguro(novoSeguro);
+
     }
 
     public void gerarSeguro(LocalDate dataInicio, LocalDate dataFim,
@@ -121,7 +142,6 @@ public class Seguradora {
     //     for (Cliente c : listaClientes) {
     //         if (c.getCadastro().equals(cadastro)) {
     //             c.adicionarVeiculo(v);
-    //             calculaPrecoSeguroCliente(c);
     //             return true;
     //         }
     //     }
@@ -131,31 +151,10 @@ public class Seguradora {
     // public boolean excluirVeiculo(String placa) {
     //     for (Cliente c : listaClientes) {
     //         if (c.removerVeiculo(placa)) {
-    //             calculaPrecoSeguroCliente(c);
     //             return true;
     //         }
     //     }
     //     return false; // veículo que você tentou remover não existe
-    // }
-
-    // public List<Cliente> listarClientes(String tipoCliente) {
-    //     List<Cliente> clientes = new ArrayList<Cliente>();
-    //     if (tipoCliente.equals("PF")) {
-    //         for (Cliente c : this.listaClientes) {
-    //             if (c instanceof ClientePF) {
-    //                 clientes.add(c);
-    //             }
-    //         }
-    //     } else if (tipoCliente.equals("PJ")) {
-    //         for (Cliente c : this.listaClientes) {
-    //             if (c instanceof ClientePJ) {
-    //                 clientes.add(c);
-    //             }
-    //         }
-    //     } else {
-    //         System.out.println("Tipo inválido");
-    //     }
-    //     return clientes;
     // }
 
     // public boolean gerarSinistro(LocalDate data, String endereco, Veiculo veiculo, Cliente cliente) {
@@ -178,16 +177,15 @@ public class Seguradora {
     //     return false;
     // }
 
-    // public boolean visualizarSinistro(String cliente) {
-    //     boolean result = false;
-    //     for (Sinistro sList : this.listaSinistros) {
-    //         if (sList.getCliente().getCadastro().equals(cliente)) {
-    //             System.out.println(sList.toString());
-    //         }
-    //     }
-    //     return result;
-    // }
-
+    public void visualizarSinistro(String cadastro) {
+        for (Seguro seguro : this.listaSeguros) {
+            if (seguro.getCliente().getCadastro().equals(cadastro)) {
+                for (Sinistro s : seguro.getListaSinistros()) {
+                    System.out.println(s.toString());
+                }
+            }
+        }
+    }
     // public double calculaPrecoSeguroCliente(Cliente client) {
     //     int qtdeSinistros = 0;
     //     for (Sinistro sin : listaSinistros) {
@@ -208,6 +206,10 @@ public class Seguradora {
         return receita;
     }
 
+    public void cadastrarSinistro() {
+        
+    }
+
     public Cliente encontrar_cliente(String cadastro) {
         /* Retorna o cliente dono do CPF/CNPJ passado */
         for (Cliente c : this.listaClientes) {
@@ -223,9 +225,9 @@ public class Seguradora {
          * Transfere todos os veículos do cliente c1 para o cliente c2, modificando o
          * valor do seguro de ambos
          */
-        List<SeguroPF> novaListaSeguros = c1.getListaSeguros();
-        List<SeguroPF> listaAux = c2.getListaSeguros();
-        for (SeguroPF seguro : listaAux) {
+        List<Seguro> novaListaSeguros = c1.getListaSeguros();
+        List<Seguro> listaAux = c2.getListaSeguros();
+        for (Seguro seguro : listaAux) {
             seguro.setCliente(c1);
         }
         novaListaSeguros.addAll(listaAux);
@@ -243,9 +245,9 @@ public class Seguradora {
          * Transfere todos os veículos do cliente c1 para o cliente c2, modificando o
          * valor do seguro de ambos
          */
-        List<SeguroPJ> novaListaSeguros = c1.getListaSeguros();
-        List<SeguroPJ> listaAux = c2.getListaSeguros();
-        for (SeguroPJ seguro : listaAux) {
+        List<Seguro> novaListaSeguros = c1.getListaSeguros();
+        List<Seguro> listaAux = c2.getListaSeguros();
+        for (Seguro seguro : listaAux) {
             seguro.setCliente(c1);
         }
         novaListaSeguros.addAll(listaAux);
@@ -257,25 +259,29 @@ public class Seguradora {
         }
         c2.limparSeguros();
     }
-    
 
     public List <Seguro> getSegurosPorCliente(Cliente cliente) {
-        List <Seguro> segurosCliente = new ArrayList<Seguro>() ;
-        for (Seguro seguro : this.listaSeguros) {
-            if (seguro.getCliente().equals(cliente)) {
-                segurosCliente.add(seguro);
-            }
-        }
-        return segurosCliente ;
+        /*
+         * Retorna um lista com todos os seguros de um cliente PJ
+         */
+        return cliente.getListaSeguros();
     }
 
-    public List <Sinistro> getSinistrosPorCliente(Cliente cliente) {
-        for (Seguro seguro : this.listaSeguros) {
+    public List <Sinistro> getSinistrosPorCliente(ClientePF cliente) {
+        for (Seguro seguro : cliente.getListaSeguros()) {
             if (seguro.getCliente().equals(cliente)) {
                 return seguro.getListaSinistros();
             }
         }
         return null; // esse cliente não tem sinistros
+    }
+
+    public List <Sinistro> getSinistrosPorCliente(ClientePJ cliente) {
+        List<Sinistro> listaSinistros = new ArrayList<Sinistro>();
+        for (Seguro seguro : cliente.getListaSeguros()) {
+            listaSinistros.addAll(seguro.getListaSinistros());
+        }
+        return listaSinistros; // esse cliente não tem sinistros
     }
 
     public String toString() {
