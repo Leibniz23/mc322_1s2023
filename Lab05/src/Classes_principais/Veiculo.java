@@ -6,6 +6,7 @@ public class Veiculo {
     private Seguro seguro;
     private int anoFabricacao;
 
+    /* Construtor */
     public Veiculo(String placa, String marca, String modelo, int anoFabricacao) {
         this.placa = placa;
         this.marca = marca;
@@ -13,8 +14,7 @@ public class Veiculo {
         this.anoFabricacao = anoFabricacao;
     }
 
-    public Veiculo() {}
-
+    /* Getters e Setters */
     public String getPlaca() {
         return this.placa;
     }
@@ -60,7 +60,7 @@ public class Veiculo {
             "   Placa: " + getPlaca() + "\n" +
             "   Marca: " + getMarca() + "\n" +
             "   Modelo: " + getModelo() + "\n" +
-            "   AnoFabricacao: " + getAnoFabricacao();
+            "   AnoFabricacao: " + getAnoFabricacao() + "\n";
     }
 
 }

@@ -111,4 +111,24 @@ public class Validacao {
         }
         return true;   
     }
+
+    public static boolean CondutorCadastrado(String cpf) {
+        /*
+         * Verifica se o condutor dono do CPF passado já está na lista de condutores,
+         * retornando true se já estiver na lista
+         */
+        for (Condutor c : Condutor.getListaCondutores()) {
+            if(c.getCPF().equals(cpf)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean validarExistencia(Object o) {
+        if (o == null) {
+            return false;
+        }
+        return true;
+    }
 }

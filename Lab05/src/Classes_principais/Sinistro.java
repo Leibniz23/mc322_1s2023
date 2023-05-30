@@ -11,7 +11,8 @@ public class Sinistro {
     private Condutor condutor;
     private static int cont = 1;
 
-    public Sinistro(LocalDate data, String endereco, Seguro seguro,Condutor condutor) {
+    /* Construtor */
+    public Sinistro(LocalDate data, String endereco, Seguro seguro, Condutor condutor) {
         this.ID = cont++;
         this.data = data;
         this.endereco = endereco;
@@ -19,6 +20,7 @@ public class Sinistro {
         this.condutor = condutor;
     }
     
+    /* Getters e Setters */
     public int getID() {
         return this.ID;
     }
@@ -56,10 +58,10 @@ public class Sinistro {
     }
     
     public String toString() {
-        return "ID: " + getID() + "\n" +
-            "Data: " + getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n" + // só transforma a data em stirng
-            "Endereco: " + getEndereco() + "\n" +
-            "ID do seguro: " + getSeguro().getID() + "\n" + // só o ID para facilitar a visualização
-            "Cadastro do Condutor: " + getCondutor().getCPF() + "\n";
+        return "   ID: " + getID() + "\n" +
+            "   Data: " + getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n" + // só transforma a data em stirng
+            "   Endereco: " + getEndereco() + "\n" +
+            "   ID do seguro: " + getSeguro().getID() + "\n" + // só o ID para facilitar a visualização
+            "   Cadastro do Condutor: " + getCondutor().getCPF() + "\n";
     }
 }

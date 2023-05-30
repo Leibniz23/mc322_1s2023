@@ -11,12 +11,16 @@ public class Condutor {
     private String email;
     private LocalDate dataNascimento;
     private List<Sinistro> listaSinistros;
+
+    /* Sempre que um novo condutor é criado ou alterado, essa modificação é
+     * registrada nessa lista estática para evitar conflitos de condutores iguais com
+     * características diferentes
+     * 
+     * Eu a deixei publica porque 
+     */
     private static List<Condutor> listaCondutores = new ArrayList<Condutor> ();
 
-    // static map que armazena os condutores existentes, pra buscar um basta buscar pelo cpf (em o(1))
-    // quando for criar ou alterar um condutor, adicionar nesse map
-
-
+    /* Construtor */
     public Condutor(String CPF, String nome, String telefone, String endereco, String email, LocalDate dataNascimento) {
         this.CPF = CPF;
         this.nome = nome;
@@ -28,6 +32,7 @@ public class Condutor {
         listaCondutores.add(this);
     }
 
+    /* Getters e Setters */
     public String getCPF() {
         return this.CPF;
     }
@@ -80,9 +85,30 @@ public class Condutor {
         this.listaSinistros = listaSinistros;
     }
 
+    public static List<Condutor> getListaCondutores() {
+        return Condutor.listaCondutores;
+    }
+
+    /* Adiciona um sinistro na lista do condutor */
     public boolean addSinistro(Sinistro sinistro) {
         this.listaSinistros.add(sinistro);
         return true;
     }
+    
+    /* Retorna o condutor dono desse CPF da lista de condutores da classe */
+    public static Condutor encontrarCondutor(String cpf) {
+        for (Condutor c : Condutor.listaCondutores) {
+            if (c.getCPF().equals(cpf)) {
+                return c;
+            }
+        }
+        return null; // condutor não está na lista
+    }
+
+    public String toString() { // Sucinto para não poluir o terminal
+        return "Nome: "+ getNome() +"\n" +
+                "CPF: "+getCPF() + "\n";
+    }
+    
     
 }

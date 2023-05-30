@@ -10,6 +10,7 @@ public class ClientePF extends Cliente {
     private LocalDate dataNascimento;
     private List<Veiculo> listaVeiculos;
 
+    /* Construtor */
     public ClientePF(String nome, String telefone, String endereco, String email, String cpf,
                     String genero, String educacao, LocalDate dataNascimento){
         super(nome, telefone, endereco, email);
@@ -17,13 +18,14 @@ public class ClientePF extends Cliente {
         this.educacao = educacao;
         this.dataNascimento = dataNascimento;
         this.genero = genero;
+        this.listaVeiculos = new ArrayList<Veiculo>();
     }
-
+    
+    /*
+     * Adiciona o objeto veiculo passado à lista de
+     * veículos do cliente
+     */
     public boolean cadastrarVeiculo(Veiculo v) {
-        /*
-         * Adiciona o objeto veiculo passado a lista de
-         * veículos do cliente
-         */
         boolean existe = false;
         for (Veiculo iV : listaVeiculos) {
             if (iV.getPlaca().equals(v.getPlaca())) {
@@ -38,11 +40,11 @@ public class ClientePF extends Cliente {
         }
     }
 
+    /*
+     * Remove o veículo que tem a placa passada
+     * da lista de veículos do cliente
+     */
     public boolean removerVeiculo(String placa) {
-        /*
-         * Remove o veículo que tem a placa passada
-         * da lista de veículos do cliente
-         */
         Iterator<Veiculo> itVeiculo = this.listaVeiculos.iterator();
         while (itVeiculo.hasNext()) { // percorre a lista usando Iterator
             Veiculo vList = itVeiculo.next();
@@ -54,6 +56,7 @@ public class ClientePF extends Cliente {
         return false; // o veículo não existe
     }
 
+    /* Getters e Setters */
     public String getCadastro() {
         return this.CPF;
     }
@@ -91,24 +94,29 @@ public class ClientePF extends Cliente {
         this.listaVeiculos = listaVeiculos;
     }
 
+    /* Explicada no cliente pai */
     public int calcIdade() {
         int ano_nascimento = this.dataNascimento.getYear();
         int idade = LocalDate.now().getYear() - ano_nascimento;
         return idade;
     }
 
+    /* Explicada no cliente pai */
     public List<Seguro> getListaSeguros() {
         return this.listaSeguros;
     }
 
+    /* Explicada no cliente pai */
     public void setListaSeguros(List<Seguro> listaSeguros) {
         this.listaSeguros = listaSeguros;
     }
 
+    /* Explicada no cliente pai */
     public boolean adicionarSeguro(Seguro seguro) {
         return this.listaSeguros.add(seguro);
     }
 
+    /* Explicada no cliente pai */
     public boolean removerSeguro(int id) {
         Iterator<Seguro> itSeguro = this.listaSeguros.iterator();
         while (itSeguro.hasNext()) { // percorre a lista usando Iterator
@@ -121,21 +129,39 @@ public class ClientePF extends Cliente {
         return false;
     }
 
+    /* Explicada no cliente pai */
     public void limparSeguros() {
         this.listaSeguros.clear();
     }
 
-    @Override
+    public void visualizarVeiculos() {
+        for (Veiculo v : this.listaVeiculos) {
+            System.out.println(v.toString());
+        }
+    }
+    
+    /*
+    * Não coloquei todas as informações, como a maioria dos atributos herdados,
+    * para facilitar a visualização
+    */
     public String toString() {
-        /*
-         * Não coloquei todas as informações, como a maioria dos atributos herdados,
-         * para facilitar a visualização
-         */
         return        
             "Nome: " + getNome() + "\n" +
             "CPF: " + getCadastro() + "\n" +
             "DataNascimento: " + getDataNascimento() + "\n" +
             "Educacao: " + getEducacao() + "\n" +
             "Genero: " + getGenero() + "\n";
-    }
+        }
+    
+    /* Explicação desses métodos está no cliente pai */
+    public List<Veiculo> getVeiculosPorFrota(int code) {return null;}
+
+    public boolean cadastrarFrota(Frota frota) {return false;}
+    
+    public boolean atualizarFrota(int code, String placa) {return false;}
+    
+    public boolean atualizarFrota(int code, Veiculo veiculo) {return false;}
+    
+    public boolean atualizarFrota(int code) {return false;}
 }
+    

@@ -7,9 +7,9 @@ public class ClientePJ extends Cliente {
     final String CNPJ ;
     private LocalDate dataFundacao;
     private int qtdeFuncionarios;
-    protected List<Seguro> listaSeguros;
     private List<Frota> listaFrota;
 
+    /* Construtor */
     public ClientePJ(String nome, String telefone, String endereco, String email,
                         String cnpj, LocalDate dataFundacao, int funcionarios) {
         super(nome, telefone, endereco, email);
@@ -19,6 +19,7 @@ public class ClientePJ extends Cliente {
         this.listaFrota = new ArrayList<Frota>();
     }
 
+    /* Getters e Setters */
     public String getCadastro() {
         return this.CNPJ;
     }
@@ -40,7 +41,6 @@ public class ClientePJ extends Cliente {
         this.qtdeFuncionarios = qtdeFuncionarios;
     }
 
-    
     public List<Frota> getListaFrota() {
         return this.listaFrota;
     }
@@ -49,12 +49,16 @@ public class ClientePJ extends Cliente {
         this.listaFrota = listaFrota;
     }
     
+    /* Explicada no cliente pai */
     public int calcIdade() {
         int ano_fundacao = this.dataFundacao.getYear();
         int idade = LocalDate.now().getYear() - ano_fundacao;
         return idade;
     }
 
+    /* Insere na lista de frotas o objeto Frota passado, contanto que ele ainda
+     * não tenha sido adicionado
+     */
     public boolean cadastrarFrota(Frota frota) {
         boolean existe = false;
         for (Frota iF : listaFrota) {
@@ -70,12 +74,8 @@ public class ClientePJ extends Cliente {
         }
     }
 
-    public boolean atualizarFrota(int code, String placa) { // remove
-        /*
-         * Adiciona ou remove, da frota indicada, um veículo
-         */
-
-        // apagar dps: vai ter que buscar o veículo por placa e a frota tbm, talvez criar um metodo pra isso
+    /* Remove o veículo dono da placa dada da frota cujo código foi passado*/
+    public boolean atualizarFrota(int code, String placa) {
         for (Frota frota : this.listaFrota) {
             if (frota.getCode() == code) {
                 frota.remVeiculo(placa);
@@ -85,7 +85,8 @@ public class ClientePJ extends Cliente {
         return false;
     }
 
-    public boolean atualizarFrota(int code, Veiculo veiculo) { // adiciona
+    /* Adiciona o Veiculo passado na frota cujo código foi passado */
+    public boolean atualizarFrota(int code, Veiculo veiculo) {
         for (Frota frota : this.listaFrota) {
             if (frota.getCode() == code) {
                 frota.addVeiculo(veiculo);
@@ -95,9 +96,10 @@ public class ClientePJ extends Cliente {
         return false;
     }
 
-    public boolean atualizarFrota(int code) { // apaga tudo
+    /* Exclui da lista de frotas a frota cujo código foi passado */
+    public boolean atualizarFrota(int code) {
         Iterator<Frota> itFrota = this.listaFrota.iterator();
-        while (itFrota.hasNext()) { // percorre a lista usando Iterator
+        while (itFrota.hasNext()) {
             Frota fList = itFrota.next();
             if (fList.getCode() == code) {
                 itFrota.remove();
@@ -107,6 +109,7 @@ public class ClientePJ extends Cliente {
         return false; // frota não encontrada
     }
 
+    /* Retorna um ArrayList contendo os veículos da frota cujo código foi passado */
     public List<Veiculo> getVeiculosPorFrota(int code) { // não fez muito sentido pra mim ter um retorno boolean
         for (Frota frota : this.listaFrota) {
             if (frota.getCode() == code) {
@@ -116,18 +119,22 @@ public class ClientePJ extends Cliente {
         return null; // essa frota não existe
     }
 
+    /* Explicada no cliente pai */
     public List<Seguro> getListaSeguros() {
         return this.listaSeguros;
     }
 
+    /* Explicada no cliente pai */
     public void setListaSeguros(List<Seguro> listaSeguros) {
         this.listaSeguros = listaSeguros;
     }
 
+    /* Explicada no cliente pai */
     public boolean adicionarSeguro(Seguro seguro) {
         return this.listaSeguros.add(seguro);
     }
 
+    /* Explicada no cliente pai */
     public boolean removerSeguro(int id) {
         Iterator<Seguro> itSeguro = this.listaSeguros.iterator();
         while (itSeguro.hasNext()) { // percorre a lista usando Iterator
@@ -140,15 +147,34 @@ public class ClientePJ extends Cliente {
         return false;
     }
 
+    /* Explicada no cliente pai */
     public void limparSeguros() {
         this.listaSeguros.clear();
     }
 
-    @Override
+    /* Explicada no cliente pai */
+    public void visualizarVeiculos() {
+        for (Frota f : this.listaFrota) {
+            System.out.println(f.toString());
+            for (Veiculo v : f.getListaVeiculos()) {
+                System.out.println(v.toString());
+            }
+        }
+    }
+
     public String toString() {
         return
             "CNPJ: " + getCadastro() + "\n" +
             "DataFundacao: " + getDataFundacao() + "\n" +
             "Quantidade de Funcionários: " + Integer.toString(getQtdeFuncionarios()) + "\n";
+    }
+
+    /* Explicação desses métodos está no cliente pai */
+    public boolean cadastrarVeiculo(Veiculo seguro) {
+        return false;
+    }
+
+    public boolean removerVeiculo(String placa) {
+        return false;
     }
 }

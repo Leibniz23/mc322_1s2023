@@ -10,6 +10,7 @@ public class Seguradora {
     private List<Seguro> listaSeguros;
     private List<Cliente> listaClientes;
 
+    /* Construtor */
     public Seguradora(String nome, String telefone, String email, String endereco) {
         this.nome = nome;
         this.telefone = telefone;
@@ -19,6 +20,7 @@ public class Seguradora {
         this.listaClientes = new ArrayList<Cliente>();
     }
 
+    /* Getters e Setters */
     public String getNome() {
         return this.nome;
     }
@@ -60,6 +62,9 @@ public class Seguradora {
     }
 
     public List<Cliente> listarClientes(String tipoCliente) {
+        /* Retorna uma lista com todos os clientes de um
+         * determinado tipo passado, podendo ser "PF" ou "PJ"
+         */
         List<Cliente> clientes = new ArrayList<Cliente>();
         if (tipoCliente.equals("PF")) {
             for (Cliente c : this.listaClientes) {
@@ -80,19 +85,33 @@ public class Seguradora {
     }
 
     public int gerarSeguro(LocalDate dataInicio, LocalDate dataFim,
-                                ClientePF clientepf, Veiculo veiculo) { // do PF
+                                ClientePF clientepf, Veiculo veiculo) {
+        /* Gera um seguroPF e adiciona ele tanto na lista da seguradora
+        * quanto na lista do cliente dono do seguro
+        */
         Seguro novoSeguro = new SeguroPF(dataInicio, dataFim, this, veiculo, clientepf);
+        this.listaSeguros.add(novoSeguro);
         clientepf.adicionarSeguro(novoSeguro);
-
+        return novoSeguro.getID();
     }
 
-    public void gerarSeguro(LocalDate dataInicio, LocalDate dataFim,
-                                ClientePJ clientepj, Frota frota) { // do PJ
+    public int gerarSeguro(LocalDate dataInicio, LocalDate dataFim,
+                            ClientePJ clientepj, Frota frota) {
+        /* Gera um seguroPJ e adiciona ele tanto na lista da seguradora
+         * quanto na lista do cliente dono do seguro
+         */
         Seguro novoSeguro = new SeguroPJ(dataInicio, dataFim, this, frota, clientepj);
+        this.listaSeguros.add(novoSeguro);
         clientepj.adicionarSeguro(novoSeguro);
+        return novoSeguro.getID();
     }
 
     public boolean cancelarSeguro(int id) {
+        /* 
+         * Cancela o seguro cujo ID foi passado, sendo ele de  
+         * qualquer tipo, e também remove ele da lista de seguros
+         * do cliente a quem ele pertencia
+        */
         Iterator<Seguro> itSeguro = this.listaSeguros.iterator();
         while (itSeguro.hasNext()) { // percorre a lista usando Iterator
             Seguro sList = itSeguro.next();
@@ -104,8 +123,21 @@ public class Seguradora {
         }
         return false;
     }
+
+    public void cadastrarSinistro(int id, LocalDate data, String endereco,Condutor condutor) {
+        /* Chama a função que de fato gera o sinistro */
+        for (Seguro seg : this.listaSeguros) {
+            if(seg.getID() == id) {
+                seg.gerarSinistro(data, endereco, condutor);
+                return;
+            }
+        }
+    }
     
     public boolean cadastrarCliente(Cliente newClient) { // Supõe que o cliente passado é válido
+        /* Supõe que o cliente passado é válido e cadastra ele na lista de 
+         * clientes da seguradora, se ele já não estiver la
+         */
         for (Cliente client : this.listaClientes) {
             if(newClient.getCadastro().equals(client.getCadastro())) {
                 return false;
@@ -116,6 +148,9 @@ public class Seguradora {
     }
 
     public boolean removerCliente(String cliente) { // Supõe que o cliente passado é válido
+        /* Remove o cliente passado da lista de clientes da seguradora,
+         * assim como todos os seguros a ele vinculados
+         */
         Iterator<Cliente> itClientes = this.listaClientes.iterator();
         boolean achou = false;
         while (itClientes.hasNext()) { // percorre a lista usando Iterator
@@ -138,46 +173,10 @@ public class Seguradora {
         return true;
     }
 
-    // public boolean cadastrarVeiculo(Veiculo v, String cadastro) {
-    //     for (Cliente c : listaClientes) {
-    //         if (c.getCadastro().equals(cadastro)) {
-    //             c.adicionarVeiculo(v);
-    //             return true;
-    //         }
-    //     }
-    //     return false; // o cliente que você tentou adicionar um veiculo não existe
-    // }
-
-    // public boolean excluirVeiculo(String placa) {
-    //     for (Cliente c : listaClientes) {
-    //         if (c.removerVeiculo(placa)) {
-    //             return true;
-    //         }
-    //     }
-    //     return false; // veículo que você tentou remover não existe
-    // }
-
-    // public boolean gerarSinistro(LocalDate data, String endereco, Veiculo veiculo, Cliente cliente) {
-    //     Sinistro novoSinistro = new Sinistro(data, endereco, this, veiculo, cliente);
-    //     boolean result = this.listaSinistros.add(novoSinistro); // não precisa verificar se está na lista porque cada sinistro tem um ID diferente
-    //     calculaPrecoSeguroCliente(cliente);
-    //     return result;
-    // }
-
-    // public boolean removerSinistro(int id) {
-    //     Iterator<Sinistro> itSinistros = this.listaSinistros.iterator();
-    //     while (itSinistros.hasNext()) { // percorre a lista usando Iterator
-    //         Sinistro sList = itSinistros.next();
-    //         if (sList.getID() == id) {
-    //             itSinistros.remove();
-    //             calculaPrecoSeguroCliente(sList.getCliente());
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
-
     public void visualizarSinistro(String cadastro) {
+        /* Mostra todos os sinistros registrados no nome de um cliente,
+         * cujo cadastro é passado como parâmetro
+         */
         for (Seguro seguro : this.listaSeguros) {
             if (seguro.getCliente().getCadastro().equals(cadastro)) {
                 for (Sinistro s : seguro.getListaSinistros()) {
@@ -186,19 +185,20 @@ public class Seguradora {
             }
         }
     }
-    // public double calculaPrecoSeguroCliente(Cliente client) {
-    //     int qtdeSinistros = 0;
-    //     for (Sinistro sin : listaSinistros) {
-    //         if ((sin.getCliente().getCadastro()).equals(client.getCadastro())) {
-    //             qtdeSinistros++;
-    //         }
-    //     }
-    //     double PrecoSeguroCliente = client.calculaScore() * (1+ qtdeSinistros);
-    //     client.setValorSeguro(PrecoSeguroCliente);
-    //     return PrecoSeguroCliente;
-    // }
+
+    public void visualizarSeguros(String cadastro) {
+        /* Mostra todos os seguros registrados no nome de um cliente,
+         * cujo cadastro é passado como parâmetro
+         */
+        for (Seguro seguro : this.listaSeguros) {
+            if (seguro.getCliente().getCadastro().equals(cadastro)) {
+                System.out.println(seguro.toString());
+            }
+        }
+    }
 
     public double calculaReceita() {
+        /* Soma o valor de todos os seguros registrados pela seguradora */
         double receita = 0;
         for (Seguro seguro : listaSeguros) {
             receita += seguro.getValorMensal();
@@ -206,8 +206,30 @@ public class Seguradora {
         return receita;
     }
 
-    public void cadastrarSinistro() {
-        
+    public ClientePF encontrar_clientePF(String cadastro) {
+        /* Retorna o clientePF dono do CPF passado */
+        for (Cliente c : this.listaClientes) {
+            if (c instanceof ClientePF) {
+                ClientePF clientePF = (ClientePF) c;
+                if (clientePF.getCadastro().equals(cadastro)) {
+                    return clientePF;
+                }
+            }
+        }
+        return null; // Esse CPF não pertence a nenhum cliente
+    }
+    
+    public ClientePJ encontrar_clientePJ(String cadastro) {
+        /* Retorna o clientePJ dono do CNPJ passado */
+        for (Cliente c : this.listaClientes) {
+            if (c instanceof ClientePJ) {
+                ClientePJ clientePJ = (ClientePJ) c;
+                if (clientePJ.getCadastro().equals(cadastro)) {
+                    return clientePJ;
+                }
+            }
+        }
+        return null; // Esse CNPJ não pertence a nenhum cliente
     }
 
     public Cliente encontrar_cliente(String cadastro) {
@@ -220,10 +242,21 @@ public class Seguradora {
         return null; // Esse CPF/CNPJ não pertence a nenhum cliente
     }
 
+    public Seguro encontrar_seguro(int id) {
+        /* Retorna o seguro que possui o ID passado */
+        for (Seguro s : this.listaSeguros) {
+            if (s.getID() == id) {
+                return s;
+            }
+        }
+        return null; // Esse CPF/CNPJ não pertence a nenhum cliente
+    }
+
     public void transferirSeguro(ClientePF c1, ClientePF c2) {
         /*
-         * Transfere todos os veículos do cliente c1 para o cliente c2, modificando o
-         * valor do seguro de ambos
+         * Transfere todos os seguros do clientePF c1 para o clientePF c2
+         * (Depois de fazer o método me avisaram que não era necessário, mas como
+         * já fiz decidi mantê-lo, caso isso dê algum acréscimo de nota)
          */
         List<Seguro> novaListaSeguros = c1.getListaSeguros();
         List<Seguro> listaAux = c2.getListaSeguros();
@@ -242,8 +275,9 @@ public class Seguradora {
 
     public void transferirSeguro(ClientePJ c1, ClientePJ c2) {
         /*
-         * Transfere todos os veículos do cliente c1 para o cliente c2, modificando o
-         * valor do seguro de ambos
+         * Transfere todos os seguros do clientePJ c1 para o clientePJ c2
+         * (Depois de fazer o método me avisaram que não era necessário, mas como
+         * já fiz decidi mantê-lo, caso isso dê algum acréscimo de nota)
          */
         List<Seguro> novaListaSeguros = c1.getListaSeguros();
         List<Seguro> listaAux = c2.getListaSeguros();
@@ -260,23 +294,17 @@ public class Seguradora {
         c2.limparSeguros();
     }
 
-    public List <Seguro> getSegurosPorCliente(Cliente cliente) {
+    public static List<Seguro> getSegurosPorCliente(Cliente cliente) {
         /*
-         * Retorna um lista com todos os seguros de um cliente PJ
+         * Retorna um lista com todos os seguros de um cliente
          */
         return cliente.getListaSeguros();
     }
 
-    public List <Sinistro> getSinistrosPorCliente(ClientePF cliente) {
-        for (Seguro seguro : cliente.getListaSeguros()) {
-            if (seguro.getCliente().equals(cliente)) {
-                return seguro.getListaSinistros();
-            }
-        }
-        return null; // esse cliente não tem sinistros
-    }
-
-    public List <Sinistro> getSinistrosPorCliente(ClientePJ cliente) {
+    public static List<Sinistro> getSinistrosPorCliente(Cliente cliente) {
+        /* 
+         * Retorna uma lista com todos os sinistros associados a esse cliente
+         */
         List<Sinistro> listaSinistros = new ArrayList<Sinistro>();
         for (Seguro seguro : cliente.getListaSeguros()) {
             listaSinistros.addAll(seguro.getListaSinistros());

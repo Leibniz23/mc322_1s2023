@@ -9,11 +9,13 @@ public class Frota {
     private List<Veiculo> listaVeiculos;
     private static int cont = 1;
 
+    /* Construtor */
     public Frota() {
         this.code = cont++;
         this.listaVeiculos = new ArrayList<Veiculo>();
     }
 
+    /* Adiciona o veículo passado na lista da frota */
     public boolean addVeiculo(Veiculo v) {
         boolean existe = false;
         for (Veiculo iV : listaVeiculos) {
@@ -29,6 +31,7 @@ public class Frota {
         }
     }
 
+    /* Remove o veículo dono da placa passada da lista da frota */
     public boolean remVeiculo(String placa) {
         Iterator<Veiculo> itVeiculo = this.listaVeiculos.iterator();
         while (itVeiculo.hasNext()) { // percorre a lista usando Iterator
@@ -41,6 +44,7 @@ public class Frota {
         return false; // o veículo não existe
     }
 
+    /* Getters e Setters */
     public int getCode() {
         return this.code;
     }
@@ -55,8 +59,7 @@ public class Frota {
 
     public String toString() {
         return
-            "Code: " + getCode() + "\n" +
-            "Veículos da frota: " + getListaVeiculos() + "\n";
+            "Código da frota: " + getCode() + "\n";
     }
 
 }
