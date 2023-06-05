@@ -169,10 +169,3 @@ public class Main {
 	}
 
 }
-
-
-/*
- * Usar o atualizarFrota e talvez mais algum método
- * usar autorizar e desautorizar condutor
- * Faze comentarios em TUDO
- */

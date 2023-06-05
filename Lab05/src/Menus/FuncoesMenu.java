@@ -81,9 +81,9 @@ public class FuncoesMenu {
 				System.out.println("Digite o ID do seguro que registrará o sinistro:");
 				int id = scanner.nextInt();
 				scanner.nextLine();
-				System.out.println("Digite a data (dd/MM/yy) do sinistro:");
+				System.out.println("Digite a data (dd/MM/yyyy) do sinistro:");
 				String dataString = scanner.nextLine();
-				LocalDate data = LocalDate.parse(dataString, DateTimeFormatter.ofPattern("dd/MM/yy"));
+				LocalDate data = LocalDate.parse(dataString, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 				System.out.println("Digite o endereço do sinistro:");
 				String endereco = scanner.nextLine();
 				System.out.println("Digite a CPF do condutor responsável pelo sinistro (já deve estar cadastrado no sistema e o CPF são apenas número):");
@@ -168,6 +168,7 @@ public class FuncoesMenu {
 				String cpfCondRemove= scanner.nextLine();
 				System.out.println("Digite o ID do seguro que deseja desautorizar esse condutor:");
 				int idSeguroRemove = scanner.nextInt();
+				scanner.nextLine();
 				Seguro seguroRemove = null;
 				for (Seguradora seg : seguradora) {
 					seguroRemove = seg.encontrar_seguro(idSeguroRemove);
@@ -177,6 +178,60 @@ public class FuncoesMenu {
 				}
 				seguroRemove.desautorizarCondutor(cpfCondRemove);
 				System.out.println("Desautorizado com sucesso");
+				break;
+			case TRANSFERIR_SEGURO:
+			/* Transfere todos os seguros de um cliente para outro, contanto que todos
+			 * os seguros do cliente que está transferindo sejam da mesma seguradora e que
+			 * ambos os clientes sejam do mesmo tipo, PF ou PJ
+			 */
+				System.out.println("Para essa transferência, o cliente que está transferindo deve ter todos os seguros numa mesma seguradora.");
+				System.out.println("Além disso, devem ser do mesmo tipo, sejam ambos PF ou ambos PJ");
+				System.out.println("Digite o nome da seguradora dos clientes:");
+				String nomeSeg = scanner.nextLine();
+				Seguradora segAtual = null;
+				for (Seguradora seg : seguradora) {
+					if (nomeSeg.equals(seg.getNome())) {
+						segAtual = seg;
+					}
+				}
+
+				String tipo;
+				if (Validacao.validarExistencia(seguradora)) {
+					System.out.println("Digite o tipo dos clientes (PF/PJ):");
+					tipo = scanner.nextLine();
+				} else {
+					System.out.println("Seguradora inválida");
+					return;
+				}
+
+				if (tipo.equals("PF")) {
+					System.out.println("Digite o CPF do cliente que irá transferir os seguros:");
+					String cpf_2 = scanner.nextLine();
+					System.out.println("Digite o CPF do cliente que receberá os seguros:");
+					String cpf_1 = scanner.nextLine();
+					if (!Validacao.validarCPF(cpf_1) || !Validacao.validarCPF(cpf_2)) {
+						System.out.println("CPF inválido");
+					}
+					ClientePF clientepf_2 = segAtual.encontrar_clientePF(cpf_2);
+					ClientePF clientepf_1 = segAtual.encontrar_clientePF(cpf_1);
+					segAtual.transferirSeguro(clientepf_1, clientepf_2);
+					System.out.println("O cliente "+clientepf_2.getNome()+" transferiu todos os seus seguros para "+clientepf_1.getNome()+"\n");
+				} else if (tipo.equals("PJ")) {
+					System.out.println("Digite o CNPJ do cliente que irá transferir os seguros:");
+					String cnpj_2 = scanner.nextLine();
+					System.out.println("Digite o CNPJ do cliente que receberá os seguros:");
+					String cnpj_1 = scanner.nextLine();
+					if (!Validacao.validarCNPJ(cnpj_1) || !Validacao.validarCNPJ(cnpj_2)) {
+						System.out.println("CNPJ inválido");
+					}
+					ClientePJ clientepj_2 = segAtual.encontrar_clientePJ(cnpj_2);
+					ClientePJ clientepj_1 = segAtual.encontrar_clientePJ(cnpj_1);
+					segAtual.transferirSeguro(clientepj_1, clientepj_2);
+					System.out.println();
+					System.out.println("O cliente "+clientepj_2.getNome()+" transferiu todos os seus seguros para "+clientepj_1.getNome()+"\n");
+				} else {
+					System.out.println("Tipo inválido");
+				}
 				break;
 			case CALCULAR_RECEITA: // Soma todos os valores de seguro
 				System.out.println("Digite o nome da seguradora que deseja saber a receita: ");
@@ -228,9 +283,9 @@ public class FuncoesMenu {
 					return;
 				}
 
-				System.out.println("Digite a data de nascimento (no formato dd/mm/yy) que deseja cadastrar:");
+				System.out.println("Digite a data de nascimento (no formato dd/mm/yyyy) que deseja cadastrar:");
 				String nascimento = scanner.nextLine();
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 				LocalDate dataNascimento = LocalDate.parse(nascimento, formatter);
 
 				System.out.println("Digite o gênero que deseja cadastrar:");
@@ -276,9 +331,9 @@ public class FuncoesMenu {
 					return;
 				}
 
-				System.out.println("Digite a data de fundação (no formato dd/mm/yy) que deseja cadastrar:");
+				System.out.println("Digite a data de fundação (no formato dd/mm/yyyy) que deseja cadastrar:");
 				String fundacao = scanner.nextLine();
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 				LocalDate dataFundacao = LocalDate.parse(fundacao, formatter);
 				
 				System.out.println("Digite a quantidade de funcionários que deseja cadastrar:");
@@ -368,9 +423,9 @@ public class FuncoesMenu {
 			System.out.println("Digite o email do condutor que deseja cadastrar:");
 			String email = scanner.nextLine();
 
-			System.out.println("Digite a data de nascimento (no formato dd/mm/yy) que deseja cadastrar:");
+			System.out.println("Digite a data de nascimento (no formato dd/mm/yyyy) que deseja cadastrar:");
 			String nascimento = scanner.nextLine();
-			LocalDate dataNascimento = LocalDate.parse(nascimento, DateTimeFormatter.ofPattern("dd/MM/yy"));
+			LocalDate dataNascimento = LocalDate.parse(nascimento, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
 			new Condutor(cpf, nome, telefone, endereco, email, dataNascimento);
 			System.out.println("Condutor registrado com sucesso");
@@ -380,13 +435,13 @@ public class FuncoesMenu {
 			System.out.println("Digite PF para cadastrar um seguro de pessoa física ou PJ para cadastrar um seguro de pessoa jurídica:");
 			String tipo = scanner.nextLine();
 
-			System.out.println("Digite a data (dd/MM/yy) de inicio do seguro:");
+			System.out.println("Digite a data (dd/MM/yyyy) de inicio do seguro:");
 			String inicio = scanner.nextLine();
-			LocalDate dataInicio= LocalDate.parse(inicio, DateTimeFormatter.ofPattern("dd/MM/yy"));
+			LocalDate dataInicio= LocalDate.parse(inicio, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 			
 			System.out.println("Digite a data (dd/MM/yyyy) de término do seguro:");
 			String fim = scanner.nextLine();
-			LocalDate dataFim= LocalDate.parse(fim, DateTimeFormatter.ofPattern("dd/MM/yy"));
+			LocalDate dataFim= LocalDate.parse(fim, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 			
 			System.out.println("Digite o nome da seguradora em que você irá registrar esse seguro:");
 			String nomeSeg = scanner.nextLine();

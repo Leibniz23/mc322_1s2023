@@ -22,7 +22,6 @@ public abstract class Seguro {
         this.seguradora = seguradora;
         this.listaSinistros = new ArrayList<Sinistro>();
         this.listaCondutores = new ArrayList<Condutor>();
-        //this.valorMensal = calcularValor();
     }
 
     /* Getters e Setters */
@@ -103,21 +102,29 @@ public abstract class Seguro {
     public abstract boolean desautorizarCondutor(String cpf);
 
     /*
-     * Esses getters e setters abaixo servem apenas pra eu poder chamar eles em
-     * qualquer instância de Seguro, mesmo sem saber se trata-se de um
+    * Esses getters e setters abaixo servem apenas pra eu poder chamar eles em
+    * qualquer instância de Seguro, mesmo sem saber se trata-se de um
      * seguroPF ou PJ
      */
     public abstract Cliente getCliente();
-
+    
     public abstract Frota getFrota();
 
     public abstract boolean setFrota(Frota f);
-
+    
     public abstract Veiculo getVeiculo();
-
+    
     public abstract boolean setVeiculo(Veiculo v);
-
+    
     public abstract boolean setCliente(ClientePF c);
-
+    
     public abstract boolean setCliente(ClientePJ c);
+
+    public String toString() {
+        return
+            "   ID: " + getID() + "\n" +
+            "   Data de Inicio: "+ getDataInicio() +"\n"+
+            "   Data de Fim: "+ getDataFim() +"\n"+
+            "   Seguradora: "+ getSeguradora().getNome() +"\n";
+    }
 }

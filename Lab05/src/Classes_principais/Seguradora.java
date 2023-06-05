@@ -134,7 +134,7 @@ public class Seguradora {
         }
     }
     
-    public boolean cadastrarCliente(Cliente newClient) { // Supõe que o cliente passado é válido
+    public boolean cadastrarCliente(Cliente newClient) {
         /* Supõe que o cliente passado é válido e cadastra ele na lista de 
          * clientes da seguradora, se ele já não estiver la
          */
@@ -147,15 +147,16 @@ public class Seguradora {
         return result;
     }
 
-    public boolean removerCliente(String cliente) { // Supõe que o cliente passado é válido
+    public boolean removerCliente(String cadastro) {
         /* Remove o cliente passado da lista de clientes da seguradora,
-         * assim como todos os seguros a ele vinculados
+         * assim como todos os seguros a ele vinculados (supondo que o cadastro
+         * passado seja válido)
          */
         Iterator<Cliente> itClientes = this.listaClientes.iterator();
         boolean achou = false;
         while (itClientes.hasNext()) { // percorre a lista usando Iterator
             Cliente cList = itClientes.next();
-            if (cList.getCadastro().equals(cliente)) {
+            if (cList.getCadastro().equals(cadastro)) {
                 itClientes.remove();
                 achou = true;
             }
@@ -166,7 +167,7 @@ public class Seguradora {
         Iterator<Seguro> itSeguro = this.listaSeguros.iterator();
         while (itSeguro.hasNext()) { // percorre a lista usando Iterator
             Seguro sList = itSeguro.next();
-            if (sList.getCliente().getCadastro().equals(cliente)) {
+            if (sList.getCliente().getCadastro().equals(cadastro)) {
                 itSeguro.remove();
             }
         }
@@ -254,7 +255,7 @@ public class Seguradora {
 
     public void transferirSeguro(ClientePF c1, ClientePF c2) {
         /*
-         * Transfere todos os seguros do clientePF c1 para o clientePF c2
+         * Transfere todos os seguros do clientePF c2 para o clientePF c1
          * (Depois de fazer o método me avisaram que não era necessário, mas como
          * já fiz decidi mantê-lo, caso isso dê algum acréscimo de nota)
          */
@@ -275,7 +276,7 @@ public class Seguradora {
 
     public void transferirSeguro(ClientePJ c1, ClientePJ c2) {
         /*
-         * Transfere todos os seguros do clientePJ c1 para o clientePJ c2
+         * Transfere todos os seguros do clientePJ c2 para o clientePJ c1
          * (Depois de fazer o método me avisaram que não era necessário, mas como
          * já fiz decidi mantê-lo, caso isso dê algum acréscimo de nota)
          */

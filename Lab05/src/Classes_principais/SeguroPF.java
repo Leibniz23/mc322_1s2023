@@ -115,7 +115,7 @@ public class SeguroPF extends Seguro{
         }
         double score = CalcSeguro.VALOR_BASE.getFator() * (1.0+ 1.0/(cliente.getListaSeguros().size()+2.0)) *
                         (2.0+ (qntdSinistrosCliente/10.0)) *
-                        (5.0+ (qntdSinistrosCondutor/10.0)); // a lista de sinistros desse seguro é inteira do cliente, mesmo tendo outros condutores autorizados?
+                        (5.0+ (qntdSinistrosCondutor/10.0));
         if (idade < 30.0) {
             double valorMensal = score*CalcSeguro.FATOR_ATE_30.getFator();
             this.valorMensal = valorMensal;
@@ -135,6 +135,7 @@ public class SeguroPF extends Seguro{
     }
 
     public String toString() {
+        String valorMensal = String.format("%.2f", getValorMensal());
         return        
             "   ID: " + getID() + "\n" +
             "   Data de Inicio: "+ getDataInicio() +"\n"+
@@ -142,6 +143,6 @@ public class SeguroPF extends Seguro{
             "   Seguradora: "+ getSeguradora().getNome() +"\n"+
             "   Placa do Veículo: "+ getVeiculo().getPlaca() +"\n"+
             "   Cliente responsável: "+ getCliente().getNome() +"\n" +
-            "   Valor mensal: "+ Double.toString(getValorMensal()) +"\n";
+            "   Valor mensal: "+ valorMensal +"\n";
     }
 }

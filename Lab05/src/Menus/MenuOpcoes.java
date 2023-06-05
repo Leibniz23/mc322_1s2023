@@ -30,6 +30,7 @@ public enum MenuOpcoes {
 	ATUALIZAR_FROTA("Atualizar Frota", new SubmenuOpcoes[] {SubmenuOpcoes.VOLTAR}),
 	AUTORIZAR_CONDUTOR("Autorizar Condutor", new SubmenuOpcoes[] {SubmenuOpcoes.VOLTAR}),
 	DESAUTORIZAR_CONDUTOR("Desautorizar Condutor", new SubmenuOpcoes[] {SubmenuOpcoes.VOLTAR}),
+	TRANSFERIR_SEGURO("Transferir seguro", new SubmenuOpcoes[] {SubmenuOpcoes.VOLTAR}),
 	CALCULAR_RECEITA("Calcular Receita", new SubmenuOpcoes[] {SubmenuOpcoes.VOLTAR}),
 	SAIR("Sair", new SubmenuOpcoes[] {});
 	
@@ -37,11 +38,13 @@ public enum MenuOpcoes {
 	private final String descricao;
 	private final SubmenuOpcoes[] submenu;
 	
+	/* Construtor */
 	MenuOpcoes(String descricao, SubmenuOpcoes[] submenu){
 		this.descricao = descricao;
 		this.submenu = submenu;
 	}
 	
+	/* Getters e Setters */
 	public String getDescricao() {
 		return descricao;
 	}

@@ -77,9 +77,8 @@ public class ClientePF extends Cliente {
         this.genero = genero;
     }
 
-    public String getDataNascimento() { // não tem set porque ninguém muda de data de nascimento
-        String data = this.dataNascimento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        return data;
+    public LocalDate getDataNascimento() { // não tem set porque ninguém muda de data de nascimento
+        return this.dataNascimento;
     }
 
     public void setDataNascimento(LocalDate dataNascimento) {
@@ -134,24 +133,13 @@ public class ClientePF extends Cliente {
         this.listaSeguros.clear();
     }
 
+    /* Explicada no cliente pai */
     public void visualizarVeiculos() {
         for (Veiculo v : this.listaVeiculos) {
             System.out.println(v.toString());
         }
     }
     
-    /*
-    * Não coloquei todas as informações, como a maioria dos atributos herdados,
-    * para facilitar a visualização
-    */
-    public String toString() {
-        return        
-            "Nome: " + getNome() + "\n" +
-            "CPF: " + getCadastro() + "\n" +
-            "DataNascimento: " + getDataNascimento() + "\n" +
-            "Educacao: " + getEducacao() + "\n" +
-            "Genero: " + getGenero() + "\n";
-        }
     
     /* Explicação desses métodos está no cliente pai */
     public List<Veiculo> getVeiculosPorFrota(int code) {return null;}
@@ -163,5 +151,19 @@ public class ClientePF extends Cliente {
     public boolean atualizarFrota(int code, Veiculo veiculo) {return false;}
     
     public boolean atualizarFrota(int code) {return false;}
+    
+    /*
+    * Não coloquei todas as informações, como a maioria dos atributos herdados,
+    * para facilitar a visualização
+    */
+    public String toString() {
+        String data = this.dataNascimento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return        
+            "Nome: " + getNome() + "\n" +
+            "CPF: " + getCadastro() + "\n" +
+            "DataNascimento: " + data + "\n" +
+            "Educacao: " + getEducacao() + "\n" +
+            "Genero: " + getGenero() + "\n";
+        }
 }
     

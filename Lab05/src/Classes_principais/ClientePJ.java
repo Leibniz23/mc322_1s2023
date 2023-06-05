@@ -24,9 +24,8 @@ public class ClientePJ extends Cliente {
         return this.CNPJ;
     }
 
-    public String getDataFundacao() {
-        String data = this.dataFundacao.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        return data;
+    public LocalDate getDataFundacao() {
+        return this.dataFundacao;
     }
 
     public void setDataFundacao(LocalDate dataFundacao) {
@@ -110,7 +109,7 @@ public class ClientePJ extends Cliente {
     }
 
     /* Retorna um ArrayList contendo os veículos da frota cujo código foi passado */
-    public List<Veiculo> getVeiculosPorFrota(int code) { // não fez muito sentido pra mim ter um retorno boolean
+    public List<Veiculo> getVeiculosPorFrota(int code) { // não fez muito sentido pra mim ter um retorno boolean, como indica o UML
         for (Frota frota : this.listaFrota) {
             if (frota.getCode() == code) {
                 return frota.getListaVeiculos();
@@ -162,13 +161,7 @@ public class ClientePJ extends Cliente {
         }
     }
 
-    public String toString() {
-        return
-            "CNPJ: " + getCadastro() + "\n" +
-            "DataFundacao: " + getDataFundacao() + "\n" +
-            "Quantidade de Funcionários: " + Integer.toString(getQtdeFuncionarios()) + "\n";
-    }
-
+    
     /* Explicação desses métodos está no cliente pai */
     public boolean cadastrarVeiculo(Veiculo seguro) {
         return false;
@@ -176,5 +169,14 @@ public class ClientePJ extends Cliente {
 
     public boolean removerVeiculo(String placa) {
         return false;
+    }
+    
+    public String toString() {
+        String data = this.dataFundacao.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String funcionarios = Integer.toString(getQtdeFuncionarios());
+        return
+            "CNPJ: " + getCadastro() + "\n" +
+            "DataFundacao: " + data + "\n" +
+            "Quantidade de Funcionários: " + funcionarios + "\n";
     }
 }

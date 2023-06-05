@@ -15,8 +15,6 @@ public class Condutor {
     /* Sempre que um novo condutor é criado ou alterado, essa modificação é
      * registrada nessa lista estática para evitar conflitos de condutores iguais com
      * características diferentes
-     * 
-     * Eu a deixei publica porque 
      */
     private static List<Condutor> listaCondutores = new ArrayList<Condutor> ();
 
@@ -29,7 +27,7 @@ public class Condutor {
         this.email = email;
         this.dataNascimento = dataNascimento;
         this.listaSinistros = new ArrayList<Sinistro> ();
-        listaCondutores.add(this);
+        listaCondutores.add(this); // o condutor é adicionado na lista no momento que é criado
     }
 
     /* Getters e Setters */
@@ -109,6 +107,4 @@ public class Condutor {
         return "Nome: "+ getNome() +"\n" +
                 "CPF: "+getCPF() + "\n";
     }
-    
-    
 }

@@ -8,10 +8,12 @@ public enum CalcSeguro {
 
     private final double fator;
 
+    /* Construtor */
     CalcSeguro(double fator) {
         this.fator = fator;
     }
 
+    /* Getters e Setters */
     public double getFator() {
         return this.fator;
     }

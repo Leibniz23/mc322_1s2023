@@ -68,7 +68,7 @@ public abstract class Cliente {
     */
     public abstract void limparSeguros();
 
-    /* Método abstrato que que retorna a lista de seguros do cliente */
+    /* Método abstrato que retorna a lista de seguros do cliente */
     public abstract List<Seguro> getListaSeguros();
 
     /* Método abstrato que redefine a lista de seguros do cliente */

@@ -22,10 +22,12 @@ public enum SubmenuOpcoes {
 	
 	private final String descricao;
 	
+	/* Construtor */
 	SubmenuOpcoes(String descricao){
 		this.descricao = descricao;
 	}
 
+	/* Getters e Setters */
 	public String getDescricao() {
 		return descricao;
 	}
