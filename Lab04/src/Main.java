@@ -99,5 +99,4 @@ public class Main {
 		scanner.close();
 		System.out.println("Até mais!");
 	}
-
 }

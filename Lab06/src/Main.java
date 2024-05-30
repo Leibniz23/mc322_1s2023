@@ -16,7 +16,6 @@ import Menus.*;
 
 public class Main {
 	public static void main(String[] args) {
-        
         /* Instanciações, cadastros iniciais e validações */
 		MenuOpcoes op;
 		Scanner scanner = new Scanner(System.in);

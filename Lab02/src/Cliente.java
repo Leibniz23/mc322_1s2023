@@ -107,5 +107,4 @@ public class Cliente {
             "Idade: " + getIdade() + "\n" +
             "Endereco: " + getEndereco() + "\n";
     }
-
 }

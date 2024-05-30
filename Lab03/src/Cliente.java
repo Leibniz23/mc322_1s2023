@@ -40,5 +40,4 @@ public class Cliente {
                 "Endereco: " + getEndereco() + "\n";
 
     }
-
 }

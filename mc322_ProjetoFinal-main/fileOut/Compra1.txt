@@ -1,0 +1,6 @@
+Código da compra: 1
+
+Quantidade de ingressos comprados: 0
+#############################
+Quantidade de consumíveis comprados: 0
+#############################
